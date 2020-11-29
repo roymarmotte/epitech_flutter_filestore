@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
@@ -16,10 +15,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _bottomNavIndex = 0;
   final iconList = <IconData>[
-    Icons.brightness_5,
-    Icons.brightness_4,
-    Icons.brightness_6,
-    Icons.brightness_7,
+    Icons.home,
+    Icons.account_circle_outlined,
+    Icons.shopping_basket_outlined,
   ];
 
   void shoppingBasketRoad() {
@@ -34,18 +32,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: new Center(
           child: Text(
-            "Epicture en plus facile",
+            "Flutter File Store",
             textAlign: TextAlign.center,
           ),
         ),
-        actions: <Widget>[
-          new IconButton(
-            icon: new Icon(
-              Icons.shopping_basket,
-            ),
-            onPressed: shoppingBasketRoad,
-          )
-        ],
       ),
       body: Column(
         children: [
@@ -109,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         icons: iconList,
         activeIndex: _bottomNavIndex,
         backgroundColor: HexColor('#4285F4'),
-        gapLocation: GapLocation.center,
+        gapLocation: GapLocation.none,
         notchSmoothness: NotchSmoothness.verySmoothEdge,
         leftCornerRadius: 0,
         rightCornerRadius: 0,
