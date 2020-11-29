@@ -27,6 +27,9 @@ jobs:
     # Get flutter dependencies.
     - run: flutter pub get
     
+    # Check for any formatting issues in the code.
+    - run: flutter format --set-exit-if-changed .
+    
     # Statically analyze the Dart code for any errors.
     - run: flutter analyze .
     
@@ -41,9 +44,3 @@ jobs:
       with:
         name: release-apk
         path: build/app/outputs/apk/release/app-release.apk
-    - uses: creyD/prettier_action@v3.1
-      with:
-        # Update the current commit instead of creating a new one
-        same_commit: true
-        # Only prettify files changed in the last commit, can't be used with file_pattern!
-        only_changed: true
