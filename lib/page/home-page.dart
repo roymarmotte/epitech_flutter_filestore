@@ -33,13 +33,13 @@ class _HomePageState extends State<HomePage> {
     List<Dish> initialDish = [
       Dish(
           "Omelette au fromage",
-          "It's very good !",
+          "Dish made from beaten eggs, fried with butter or oil in a frying pan.",
           List(),
           "https://www.canalvie.com/polopoly_fs/1.8675792!/image/Omelette%20fromage.jpg_gen/derivatives/cvlandscape_499_281/Omelette%20fromage.jpg",
           8.00),
       Dish(
           "Welsh",
-          "It's very very good !",
+          " Le Welsh is basically cheese on toast, but with a few added extras - depending on where you are - like beer, mustard or ham.",
           List(),
           "https://img.cuisineaz.com/660x660/2019-08-08/i149772-welsh-au-thermomix.jpeg",
           9.20),
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: new Center(
           child: Text(
-            "Flutter File Store",
+            "Restaurant Delivery",
             textAlign: TextAlign.center,
           ),
         ),
