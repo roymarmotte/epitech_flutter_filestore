@@ -1,9 +1,8 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/components/dishComponent.dart';
-import 'package:epitech_flutter_filestore/items/dish.dart';
+import 'package:epitech_flutter_filestore/data/dishes_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -15,6 +14,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _searchBarController;
+
+  void initState() {
+    super.initState();
+    _searchBarController = TextEditingController();
+  }
+
+  void dispose() {
+    _searchBarController.dispose();
+    super.dispose();
+  }
+
   var _bottomNavIndex = 0;
   final iconList = <IconData>[
     Icons.home,
@@ -30,27 +41,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Dish> initialDish = [
-      Dish(
-          "Omelette au fromage",
-          "It's very good !",
-          List(),
-          "https://www.canalvie.com/polopoly_fs/1.8675792!/image/Omelette%20fromage.jpg_gen/derivatives/cvlandscape_499_281/Omelette%20fromage.jpg",
-          8.00),
-      Dish(
-          "Welsh",
-          "It's very very good !",
-          List(),
-          "https://img.cuisineaz.com/660x660/2019-08-08/i149772-welsh-au-thermomix.jpeg",
-          9.20),
-    ];
-    List<Widget> widgetDish = initialDish.map((e) => DishComponent(e)).toList();
-
     return Scaffold(
       appBar: AppBar(
         title: new Center(
           child: Text(
-            "Flutter File Store",
+            "Restaurant Delivery",
             textAlign: TextAlign.center,
           ),
         ),
@@ -66,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                 height: MediaQuery.of(context).size.height *
                     0.10, //MediaQuery.of(context).size.height % 10,
                 child: TextField(
+                  controller: _searchBarController,
                   autocorrect: false,
                   decoration: InputDecoration(
                       hintText: "Search a dish or an entrée...",
@@ -82,7 +78,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 padding: EdgeInsets.only(left: 50.0),
                 child: Text(
-                  'Choose a Categorie :',
+                  'Choose a Categorie:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
               )
@@ -111,7 +107,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          ...widgetDish,
+          ...filterDishes(_searchBarController.text)
         ],
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
@@ -126,6 +122,13 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+filterDishes(String searchBarText) {
+  var filtredDishes = initialDish.where((element) =>
+      element.title.toLowerCase().contains(searchBarText.toLowerCase()));
+  List<Widget> widgetDish = filtredDishes.map((e) => DishComponent(e)).toList();
+  return widgetDish;
 }
 
 class HexColor extends Color {
