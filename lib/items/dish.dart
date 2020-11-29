@@ -1,6 +1,6 @@
 import 'dart:ffi';
 import 'dart:io';
-import 'package:epitech_flutter_filestore/item/ingredient.dart';
+import 'package:epitech_flutter_filestore/items/ingredient.dart';
 import 'package:flutter/cupertino.dart';
 
 class Dish {
