@@ -11,8 +11,8 @@ class DishComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Container(
-          width: 100,
-          height: 100,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
