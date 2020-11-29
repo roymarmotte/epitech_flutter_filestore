@@ -1,3 +1,5 @@
+import 'package:epitech_flutter_filestore/components/dishComponent.dart';
+import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +30,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Dish> initialDish = [
+      Dish(
+          "Omelette au fromage",
+          "It's very good !",
+          List(),
+          "https://www.canalvie.com/polopoly_fs/1.8675792!/image/Omelette%20fromage.jpg_gen/derivatives/cvlandscape_499_281/Omelette%20fromage.jpg",
+          8.00),
+      Dish(
+          "Welsh",
+          "It's very very good !",
+          List(),
+          "https://img.cuisineaz.com/660x660/2019-08-08/i149772-welsh-au-thermomix.jpeg",
+          9.20),
+    ];
+    List<Widget> widgetDish = initialDish.map((e) => DishComponent(e)).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: new Center(
@@ -90,9 +108,10 @@ class _HomePageState extends State<HomePage> {
                     )
                   ],
                 ),
-              )
+              ),
             ],
           ),
+          ...widgetDish,
         ],
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
