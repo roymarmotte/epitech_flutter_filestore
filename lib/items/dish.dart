@@ -4,17 +4,17 @@ import 'package:epitech_flutter_filestore/items/ingredient.dart';
 import 'package:flutter/cupertino.dart';
 
 class Dish {
-  Float price;
-  Image img;
+  double price;
+  String img;
   List<Ingredient> ingredients;
   String title;
   String description;
 
-  Dish(String title, String description, List<Ingredient> ingredient, File img,
-      Float price) {
+  Dish(String title, String description, List<Ingredient> ingredient, String img,
+      double price) {
     this.title       = title;
     this.description = description;
-    this.img         = Image.file(img);
+    this.img         = img;
     this.price       = price;
     this.ingredients = ingredients;
   }

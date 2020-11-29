@@ -10,7 +10,16 @@ class DishComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: this.dish.img,
+      leading: Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: NetworkImage(this.dish.img),
+              fit: BoxFit.fill
+            ),
+          ),),
       title: Text(this.dish.title),
       subtitle: Text(this.dish.description),
       isThreeLine: true,
