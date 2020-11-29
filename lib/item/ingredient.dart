@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 class Ingredient {
   String title;
-  Float price;
+  bool presence;
 
-  Ingredient(this.title, this.price);
+  Ingredient(this.title, this.presence);
 }
