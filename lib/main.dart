@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(title: 'Restaurant Delivery Home Page'),
+      routes: {'/': (context) => HomePage(), '/dish': (context) => HomePage(), '/profile': (context) => HomePage(), '/basket': (context) => HomePage()},
     );
   }
 }
