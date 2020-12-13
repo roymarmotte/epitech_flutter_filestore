@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'page/home-page.dart';
+import 'package:epitech_flutter_filestore/page/home-page.dart';
+import 'package:epitech_flutter_filestore/page/profile-page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routes: {'/': (context) => HomePage(), '/dish': (context) => HomePage(), '/profile': (context) => HomePage(), '/basket': (context) => HomePage()},
+      routes: {'/': (context) => HomePage(), '/dish': (context) => HomePage(), '/profile': (context) => ProfilePage(), '/basket': (context) => HomePage()},
     );
   }
 }
