@@ -33,9 +33,11 @@ class _HomePageState extends State<HomePage> {
     Icons.shopping_basket_outlined,
   ];
 
-  void shoppingBasketRoad() {
-    print("Shopping basket icon clicked !");
-  }
+  final routeList = <String>[
+    "/",
+    "/profile",
+    "/basket",
+  ];
 
   void searchButtonRoad() {}
 
@@ -118,7 +120,9 @@ class _HomePageState extends State<HomePage> {
         notchSmoothness: NotchSmoothness.verySmoothEdge,
         leftCornerRadius: 0,
         rightCornerRadius: 0,
-        onTap: (index) => setState(() => _bottomNavIndex = index),
+        onTap: (index) => 
+          Navigator.pushReplacementNamed(context, routeList[index])
+        ,
       ),
     );
   }
