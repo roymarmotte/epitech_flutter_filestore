@@ -16,7 +16,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   User _user = User("James", "Cameron", "1 Boulevard du Général", 13086,
       "Paris", "France", null, null);
-  Future<String> _imagePath = null;
+  Future<String> _imagePath;
   final _errorSnapMessage = SnackBar(content: Text("Picture Error"));
 
   @override
