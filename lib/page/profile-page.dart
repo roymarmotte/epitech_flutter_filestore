@@ -18,7 +18,6 @@ class _ProfilePageState extends State<ProfilePage> {
       "Paris", "France", null, null);
   Future<String> _imagePath;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,42 +39,61 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Column(
             children: [
-              Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.30,
-                    width: MediaQuery.of(context).size.width,
-                    color: Colors.grey,
-                  ),
-                  FutureBuilder<String>(
-                    future: _imagePath,
-                    builder:
-                        (BuildContext context, AsyncSnapshot<String> snapshot) {
-                      if (snapshot.hasData) {
-                        _user.picturePath = snapshot.data;
-                        _user.save();
-                      } else if (snapshot.hasError) {
-                        //TODO : implement AlertDialog
-                        print("error");
-                      }
-                      return (_user.picturePath == null
-                          ? Image.asset('images/basic_profile.png',
-                              height: MediaQuery.of(context).size.height * 0.25,
-                              width: MediaQuery.of(context).size.width * 0.25)
-                          : Image.file(File(_user.picturePath)));
-                    },
-                  ),
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                      child: IconButton(
-                          icon: Icon(Icons.add_a_photo),
-                          onPressed: () {
-                            setState(() {
-                              _imagePath = getImageFromGallery(context);
-                            });
-                          })),
-                ],
+              Container(
+                height: MediaQuery.of(context).size.height * 0.40,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.grey,
+                child: Column(
+                  children: [
+                    FutureBuilder<String>(
+                      future: _imagePath,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
+                        if (snapshot.hasData) {
+                          _user.picturePath = snapshot.data;
+                          _user.save();
+                        } else if (snapshot.hasError) {
+                          //TODO : implement AlertDialog
+                          print("error");
+                        }
+                        return (_user.picturePath == null
+                            ? Image.asset('images/basic_profile.png',
+                                height:
+                                    MediaQuery.of(context).size.height * 0.25,
+                                width: MediaQuery.of(context).size.width * 0.25)
+                            : Image.file(
+                                File(_user.picturePath),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.25,
+                                width: MediaQuery.of(context).size.width * 0.25,
+                              ));
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            alignment: Alignment.bottomCenter,
+                            child: IconButton(
+                                icon: Icon(Icons.add_a_photo),
+                                onPressed: () {
+                                  setState(() {
+                                    _imagePath = getImageFromCamera(context);
+                                  });
+                                })),
+                        Container(
+                            alignment: Alignment.bottomCenter,
+                            child: IconButton(
+                                icon: Icon(Icons.folder),
+                                onPressed: () {
+                                  setState(() {
+                                    _imagePath = getImageFromGallery(context);
+                                  });
+                                })),
+                      ],
+                    )
+                  ],
+                ),
               ),
               Container(
                 height: MediaQuery.of(context).size.width * 0.45,
