@@ -1,4 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:epitech_flutter_filestore/page/profile-page.dart';
 import 'package:epitech_flutter_filestore/components/dishComponent.dart';
 import 'package:epitech_flutter_filestore/data/dishes_data.dart';
 import 'package:flutter/foundation.dart';
@@ -33,10 +34,9 @@ class _HomePageState extends State<HomePage> {
     Icons.shopping_basket_outlined,
   ];
 
-  final routeList = <String>[
-    "/",
-    "/profile",
-    "/basket",
+  final routeList = <Widget>[
+    HomePage(),
+    ProfilePage(),
   ];
 
   void searchButtonRoad() {}
@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
         leftCornerRadius: 0,
         rightCornerRadius: 0,
         onTap: (index) => 
-          Navigator.pushReplacementNamed(context, routeList[index])
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()))
         ,
       ),
     );

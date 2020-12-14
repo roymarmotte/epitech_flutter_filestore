@@ -22,6 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: new Center(
             child: Text(
@@ -31,8 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            //TODO : call router pushback();
-            print("go back ! ");
+            Navigator.pop(context);
           },
         ),
       ),
@@ -77,8 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               Container(
-                height: MediaQuery.of(context).size.width * 0.80,
-                width: MediaQuery.of(context).size.height * 0.90,
+                height: MediaQuery.of(context).size.width * 0.45,
+                width: MediaQuery.of(context).size.height * 0.80,
                 child: ListView(padding: const EdgeInsets.all(8), children: [
                   ProfileComponent(
                       fieldName: "Firstname", fieldValue: _user.firstname),
