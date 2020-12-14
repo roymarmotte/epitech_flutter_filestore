@@ -17,7 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
   User _user = User("James", "Cameron", "1 Boulevard du Général", 13086,
       "Paris", "France", null, null);
   Future<String> _imagePath;
-  final _errorSnapMessage = SnackBar(content: Text("Picture Error"));
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         _user.picturePath = snapshot.data;
                         _user.save();
                       } else if (snapshot.hasError) {
-                        Scaffold.of(context).showSnackBar(_errorSnapMessage);
+                        //TODO : implement AlertDialog
+                        print("error");
                       }
                       return (_user.picturePath == null
                           ? Image.asset('images/basic_profile.png',
