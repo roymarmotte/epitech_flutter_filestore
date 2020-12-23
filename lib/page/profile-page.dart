@@ -35,87 +35,113 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         ),
       ),
-      body: Column(
-        children: [
-          Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.40,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.grey,
-                child: Column(
+      body: FutureBuilder<User>(
+        future: User.load(),
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != null) _user = snapshot.data;
+            return Column(
+              children: [
+                Column(
                   children: [
-                    FutureBuilder<String>(
-                      future: _imagePath,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<String> snapshot) {
-                        if (snapshot.hasData) {
-                          _user.picturePath = snapshot.data;
-                          _user.save();
-                        } else if (snapshot.hasError) {
-                          //TODO : implement AlertDialog
-                          print("error");
-                        }
-                        return (_user.picturePath == null
-                            ? Image.asset('images/basic_profile.png',
-                                height:
-                                    MediaQuery.of(context).size.height * 0.25,
-                                width: MediaQuery.of(context).size.width * 0.25)
-                            : Image.file(
-                                File(_user.picturePath),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.25,
-                                width: MediaQuery.of(context).size.width * 0.25,
-                              ));
-                      },
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.40,
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.grey,
+                      child: Column(
+                        children: [
+                          FutureBuilder<String>(
+                            future: _imagePath,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<String> snapshotImg) {
+                              if (snapshotImg.hasData) {
+                                _user.picturePath = snapshotImg.data;
+                                _user.save();
+                              }
+                              return (_user.picturePath == null
+                                  ? Image.asset('images/basic_profile.png',
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.25,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.25)
+                                  : Image.file(
+                                      File(_user.picturePath),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.25,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.25,
+                                    ));
+                            },
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  alignment: Alignment.bottomCenter,
+                                  child: IconButton(
+                                      icon: Icon(Icons.add_a_photo),
+                                      onPressed: () {
+                                        setState(() {
+                                          _imagePath =
+                                              getImageFromCamera(context);
+                                        });
+                                      })),
+                              Container(
+                                  alignment: Alignment.bottomCenter,
+                                  child: IconButton(
+                                      icon: Icon(Icons.folder),
+                                      onPressed: () {
+                                        setState(() {
+                                          _imagePath =
+                                              getImageFromGallery(context);
+                                        });
+                                      })),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            alignment: Alignment.bottomCenter,
-                            child: IconButton(
-                                icon: Icon(Icons.add_a_photo),
-                                onPressed: () {
-                                  setState(() {
-                                    _imagePath = getImageFromCamera(context);
-                                  });
-                                })),
-                        Container(
-                            alignment: Alignment.bottomCenter,
-                            child: IconButton(
-                                icon: Icon(Icons.folder),
-                                onPressed: () {
-                                  setState(() {
-                                    _imagePath = getImageFromGallery(context);
-                                  });
-                                })),
-                      ],
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.465,
+                      width: MediaQuery.of(context).size.width,
+                      child:
+                          ListView(padding: const EdgeInsets.all(8), children: [
+                        ProfileComponent(
+                            fieldName: "Firstname",
+                            fieldValue: _user.firstname),
+                        ProfileComponent(
+                            fieldName: "Lastname",
+                            fieldValue: _user.lastname),
+                        ProfileComponent(
+                            fieldName: "Street",
+                            fieldValue: _user.street),
+                        ProfileComponent(
+                            fieldName: "Zip Code",
+                            fieldValue: _user.postalCode.toString()),
+                        ProfileComponent(
+                            fieldName: "City", fieldValue: _user.city),
+                        ProfileComponent(
+                            fieldName: "Country",
+                            fieldValue: _user.country),
+                      ]),
                     )
                   ],
-                ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.width * 0.45,
-                width: MediaQuery.of(context).size.height * 0.80,
-                child: ListView(padding: const EdgeInsets.all(8), children: [
-                  ProfileComponent(
-                      fieldName: "Firstname", fieldValue: _user.firstname),
-                  ProfileComponent(
-                      fieldName: "Lastname", fieldValue: _user.lastname),
-                  ProfileComponent(
-                      fieldName: "Street", fieldValue: _user.street),
-                  ProfileComponent(
-                      fieldName: "Zip Code",
-                      fieldValue: _user.postalCode.toString()),
-                  ProfileComponent(fieldName: "City", fieldValue: _user.city),
-                  ProfileComponent(
-                      fieldName: "Country", fieldValue: _user.country),
-                ]),
-              )
-            ],
-          )
-        ],
+                )
+              ],
+            );
+          } else if (snapshot.hasError) {
+            print("error");
+            return Text("Aaaaand, it's a crash. Whoops :c");
+          } else {
+            return SizedBox(
+              child: CircularProgressIndicator(),
+              width: 60,
+              height: 60,
+            );
+          }
+        },
       ),
     );
   }
