@@ -12,9 +12,10 @@ class User {
   String country;
   String picturePath;
   List<Dish> favorites;
+  List<Dish> orders;
 
   User(this.firstname, this.lastname, this.street, this.postalCode, this.city,
-      this.country, this.picturePath, this.favorites);
+      this.country, this.picturePath, this.favorites, this.orders);
 
   User.fromJson(Map<String, dynamic> json)
       : firstname = json['firstname'],
@@ -24,7 +25,9 @@ class User {
         city = json['city'],
         country = json['country'],
         picturePath = json['picturePath'],
-        favorites = json['favorites'];
+        favorites = json['favorites'],
+        orders = json['orders'];
+
   Map<String, dynamic> toJson() => {
         'firstname': firstname,
         'lastname': lastname,
@@ -34,6 +37,7 @@ class User {
         'country': country,
         'picturePath': picturePath,
         'favorites': favorites,
+        'orders' : orders
       };
 
   void save() async {

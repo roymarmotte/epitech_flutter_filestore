@@ -15,7 +15,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   User _user = User("James", "Cameron", "1 Boulevard du Général", 13086,
-      "Paris", "France", null, null);
+      "Paris", "France", null, null, null);
   Future<String> _imagePath;
 
   @override
