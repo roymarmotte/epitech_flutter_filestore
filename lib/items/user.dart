@@ -44,7 +44,9 @@ class User {
   static Future<User> load() async {
     final pref = await SharedPreferences.getInstance();
     final loaded = pref.getString('user');
-    if (loaded == null) return null;
+    if (loaded == null)
+      return User("James", "Cameron", "1 Boulevard du Général", 13086, "Paris",
+          "France", null, null);
     return User.fromJson(json.decode(loaded));
   }
 }

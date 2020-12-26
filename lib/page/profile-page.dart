@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:epitech_flutter_filestore/page/home-page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:epitech_flutter_filestore/items/user.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +16,19 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  User _user = User("James", "Cameron", "1 Boulevard du Général", 13086,
-      "Paris", "France", null, null);
+  User _user;
   Future<String> _imagePath;
+  var _bottomNavIndex = 1;
+  final iconList = <IconData>[
+    Icons.home,
+    Icons.account_circle_outlined,
+    Icons.shopping_basket_outlined,
+  ];
+  final routeList = <String>[
+    "/",
+    "/profile",
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +37,15 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: new Center(
             child: Text(
-          "Profile Page",
+          "Restaurant Delivery",
           textAlign: TextAlign.center,
         )),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
       body: FutureBuilder<User>(
         future: User.load(),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data != null) _user = snapshot.data;
+            _user = snapshot.data;
             return Column(
               children: [
                 Column(
@@ -104,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.465,
+                      height: MediaQuery.of(context).size.height * 0.402,
                       width: MediaQuery.of(context).size.width,
                       child:
                           ListView(padding: const EdgeInsets.all(8), children: [
@@ -112,23 +118,20 @@ class _ProfilePageState extends State<ProfilePage> {
                             fieldName: "Firstname",
                             fieldValue: _user.firstname),
                         ProfileComponent(
-                            fieldName: "Lastname",
-                            fieldValue: _user.lastname),
+                            fieldName: "Lastname", fieldValue: _user.lastname),
                         ProfileComponent(
-                            fieldName: "Street",
-                            fieldValue: _user.street),
+                            fieldName: "Street", fieldValue: _user.street),
                         ProfileComponent(
                             fieldName: "Zip Code",
                             fieldValue: _user.postalCode.toString()),
                         ProfileComponent(
                             fieldName: "City", fieldValue: _user.city),
                         ProfileComponent(
-                            fieldName: "Country",
-                            fieldValue: _user.country),
+                            fieldName: "Country", fieldValue: _user.country),
                       ]),
                     )
                   ],
-                )
+                ),
               ],
             );
           } else if (snapshot.hasError) {
@@ -143,6 +146,16 @@ class _ProfilePageState extends State<ProfilePage> {
           }
         },
       ),
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        icons: iconList,
+        activeIndex: _bottomNavIndex,
+        backgroundColor: HexColor('#4285F4'),
+        gapLocation: GapLocation.none,
+        notchSmoothness: NotchSmoothness.verySmoothEdge,
+        leftCornerRadius: 0,
+        rightCornerRadius: 0,
+        onTap: (index) =>           Navigator.pushReplacementNamed(context, routeList[index]),
+      )
     );
   }
 }

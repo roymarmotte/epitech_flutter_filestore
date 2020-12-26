@@ -34,9 +34,9 @@ class _HomePageState extends State<HomePage> {
     Icons.shopping_basket_outlined,
   ];
 
-  final routeList = <Widget>[
-    HomePage(),
-    ProfilePage(),
+  final routeList = <String>[
+    "/",
+    "/profile",
   ];
 
   void searchButtonRoad() {}
@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
         leftCornerRadius: 0,
         rightCornerRadius: 0,
         onTap: (index) => 
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()))
+          Navigator.pushReplacementNamed(context, routeList[index])
         ,
       ),
     );
