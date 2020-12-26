@@ -1,5 +1,4 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:epitech_flutter_filestore/page/profile-page.dart';
 import 'package:epitech_flutter_filestore/components/dishComponent.dart';
 import 'package:epitech_flutter_filestore/data/dishes_data.dart';
 import 'package:flutter/foundation.dart';
