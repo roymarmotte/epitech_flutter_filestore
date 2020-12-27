@@ -75,126 +75,142 @@ class _ProfilePageState extends State<ProfilePage> {
             textAlign: TextAlign.center,
           )),
         ),
-        body: SingleChildScrollView(
-          reverse: true,
-          child: Padding(
-            padding: EdgeInsets.only(bottom: bottom),
-            child: FutureBuilder<User>(
-              future: User.load(),
-              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-                if (snapshot.hasData) {
-                  _user = snapshot.data;
-                  return Column(
-                    children: [
-                      Column(
+        body: ValueListenableBuilder(
+          valueListenable: editionCheck,
+          builder: (context, value, widget) {
+            return SingleChildScrollView(
+              reverse: true,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: bottom),
+                child: FutureBuilder<User>(
+                  future: User.load(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<User> snapshot) {
+                    if (snapshot.hasData) {
+                      _user = snapshot.data;
+                      return Column(
                         children: [
-                          Container(
-                            child: Column(
-                              children: [
-                                FutureBuilder<String>(
-                                  future: _imagePath,
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<String> snapshotImg) {
-                                    if (snapshotImg.hasData) {
-                                      _user.picturePath = snapshotImg.data;
-                                      _user.save();
-                                    }
-                                    return (_user.picturePath == null
-                                        ? InkWell(
-                                            onTap: () {
-                                              print("aluh");
-                                            },
-                                            child: Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.25,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.25,
-                                              decoration: new BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  image: new DecorationImage(
-                                                    fit: BoxFit.fill,
-                                                    image: Image.asset(
-                                                            'images/basic_profile.png')
-                                                        .image,
-                                                  )),
-                                            ),
-                                          )
-                                        : InkWell(
-                                            onTap: () {
-                                              chooseImagePicker(context);
-                                              print("aluh");
-                                            },
-                                            child: Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.25,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.25,
-                                              decoration: new BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  image: new DecorationImage(
-                                                    fit: BoxFit.contain,
-                                                    image: Image.file(
-                                                      File(_user.picturePath),
-                                                    ).image,
-                                                  )),
-                                            ),
-                                          ));
-                                  },
+                          Column(
+                            children: [
+                              Container(
+                                child: Column(
+                                  children: [
+                                    FutureBuilder<String>(
+                                      future: _imagePath,
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<String> snapshotImg) {
+                                        if (snapshotImg.hasData) {
+                                          _user.picturePath = snapshotImg.data;
+                                          _user.save();
+                                        }
+                                        return (_user.picturePath == null
+                                            ? InkWell(
+                                                onTap: () {
+                                                  chooseImagePicker(context);
+                                                },
+                                                child: Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.25,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.25,
+                                                  decoration: new BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image:
+                                                          new DecorationImage(
+                                                        fit: BoxFit.fill,
+                                                        image: Image.asset(
+                                                                'images/basic_profile.png')
+                                                            .image,
+                                                      )),
+                                                ),
+                                              )
+                                            : InkWell(
+                                                onTap: () {
+                                                  chooseImagePicker(context);
+                                                },
+                                                child: Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.25,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.25,
+                                                  decoration: new BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image:
+                                                          new DecorationImage(
+                                                        fit: BoxFit.contain,
+                                                        image: Image.file(
+                                                          File(_user
+                                                              .picturePath),
+                                                        ).image,
+                                                      )),
+                                                ),
+                                              ));
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  _user.firstname + " " + _user.lastname,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25),
-                                )
-                              ],
-                            ),
+                              ),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.402,
+                                width: MediaQuery.of(context).size.width,
+                                child: ListView(
+                                    padding: const EdgeInsets.all(8),
+                                    children: [
+                                      ProfileComponent(
+                                          label: "First Name",
+                                          fieldName: "firstname",
+                                          user: _user),
+                                      ProfileComponent(
+                                          label: "Last Name",
+                                          fieldName: "lastname",
+                                          user: _user),
+                                      ProfileComponent(
+                                          label: "Street",
+                                          fieldName: "street",
+                                          user: _user),
+                                      ProfileComponent(
+                                          fieldName: "postalCode",
+                                          label: "ZIP Code",
+                                          user: _user),
+                                      ProfileComponent(
+                                          fieldName: "city",
+                                          label: "City",
+                                          user: _user),
+                                      ProfileComponent(
+                                          label: "Country",
+                                          fieldName: "country",
+                                          user: _user),
+                                    ]),
+                              ),
+                              Text("You can edit by clicking on informations/picture")
+                            ],
                           ),
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.402,
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView(
-                                padding: const EdgeInsets.all(8),
-                                children: [
-                                  ProfileComponent(
-                                      fieldName: "Street",
-                                      fieldValue: _user.street),
-                                  ProfileComponent(
-                                      fieldName: "Zip Code",
-                                      fieldValue: _user.postalCode.toString()),
-                                  ProfileComponent(
-                                      fieldName: "City",
-                                      fieldValue: _user.city),
-                                  ProfileComponent(
-                                      fieldName: "Country",
-                                      fieldValue: _user.country),
-                                ]),
-                          )
                         ],
-                      ),
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  print("error");
-                  return Text("Aaaaand, it's a crash. Whoops :c");
-                } else {
-                  return SizedBox(
-                    child: CircularProgressIndicator(),
-                    width: 60,
-                    height: 60,
-                  );
-                }
-              },
-            ),
-          ),
+                      );
+                    } else if (snapshot.hasError) {
+                      print("error");
+                      return Text("Aaaaand, it's a crash. Whoops :c");
+                    } else {
+                      return SizedBox(
+                        child: CircularProgressIndicator(),
+                        width: 60,
+                        height: 60,
+                      );
+                    }
+                  },
+                ),
+              ),
+            );
+          },
         ),
         bottomNavigationBar: AnimatedBottomNavigationBar(
           icons: iconList,

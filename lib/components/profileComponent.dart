@@ -1,3 +1,4 @@
+import 'package:epitech_flutter_filestore/items/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -5,23 +6,33 @@ import 'package:flutter/foundation.dart';
 var editionCheck = ValueNotifier<int>(0);
 
 class ProfileComponent extends StatefulWidget {
+  final String label;
+  final User user;
   final String fieldName;
-  final String fieldValue;
 
   ProfileComponent(
-      {Key key, @required this.fieldName, @required this.fieldValue})
+      {Key key,
+      @required this.fieldName,
+      @required this.user,
+      @required this.label})
       : super(key: key);
 
   @override
   ProfileComponentState createState() =>
-      ProfileComponentState(fieldName: fieldName, fieldValue: fieldValue);
+      ProfileComponentState(fieldName: fieldName, user: user, label: label);
 }
 
 class ProfileComponentState extends State<ProfileComponent> {
-  ProfileComponentState({@required this.fieldName, @required this.fieldValue});
+  ProfileComponentState(
+      {@required fieldName, @required user, @required label}) {
+    this.fieldName = fieldName;
+    this.user = user.toJson();
+    this.label = label;
+  }
 
-  final String fieldName;
-  String fieldValue;
+  String label;
+  String fieldName;
+  Map<String, dynamic> user;
   bool isEditMode = false;
   int myTurn = 0;
 
@@ -30,29 +41,22 @@ class ProfileComponentState extends State<ProfileComponent> {
     return ValueListenableBuilder(
         valueListenable: editionCheck,
         builder: (context, value, widget) {
-          /*print("Rebuild pour " +
-              fieldName +
-              "\n\tEdit mode: " +
-              isEditMode.toString() +
-              "\n\t Turn: " +
-              myTurn.toString() +
-              "\n\tGlobal: " +
-              editionCheck.value.toString());*/
 
           if (isEditMode && editionCheck.value == myTurn) {
             return Container(
               height: 50,
               width: 50,
               child: ListTile(
-                title: Text(this.fieldName),
+                title: Text(this.label),
                 subtitle: TextFormField(
-                  initialValue: fieldValue,
+                  initialValue: user[fieldName].toString(),
                   decoration: InputDecoration(isCollapsed: true),
                   autofocus: true,
                   onFieldSubmitted: (String value) {
                     setState(() {
                       isEditMode = false;
-                      fieldValue = value;
+                      user[fieldName] = value;
+                      User.fromJson(user).save();
                     });
                   },
                 ),
@@ -65,8 +69,8 @@ class ProfileComponentState extends State<ProfileComponent> {
                 height: 50,
                 width: 50,
                 child: ListTile(
-                  title: Text(this.fieldName),
-                  subtitle: Text(this.fieldValue),
+                  title: Text(this.label),
+                  subtitle: Text(user[fieldName].toString()),
                 ),
               ),
               onTap: () {

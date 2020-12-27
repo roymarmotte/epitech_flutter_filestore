@@ -7,7 +7,7 @@ class User {
   String firstname;
   String lastname;
   String street;
-  int postalCode;
+  String postalCode;
   String city;
   String country;
   String picturePath;
@@ -45,7 +45,7 @@ class User {
     final pref = await SharedPreferences.getInstance();
     final loaded = pref.getString('user');
     if (loaded == null)
-      return User("James", "Cameron", "1 Boulevard du Général", 13086, "Paris",
+      return User("James", "Cameron", "1 Boulevard du Général", "13086", "Paris",
           "France", null, null);
     return User.fromJson(json.decode(loaded));
   }
