@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/page/home-page.dart';
 import 'package:flutter/foundation.dart';
@@ -29,133 +28,184 @@ class _ProfilePageState extends State<ProfilePage> {
     "/profile",
   ];
 
+  void chooseImagePicker(BuildContext context) {
+    Widget cancelButton = FlatButton(
+      child: Text("Take a picture"),
+      onPressed: () {
+        setState(() {
+          _imagePath = getImageFromCamera(context);
+        });
+        Navigator.of(context).pop();
+      },
+    );
+    Widget openSettingsButton = FlatButton(
+      child: Text("Choose a picture already saved"),
+      onPressed: () {
+        setState(() {
+          _imagePath = getImageFromGallery(context);
+        });
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      actions: [
+        openSettingsButton,
+        cancelButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
-      //resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: new Center(
-            child: Text(
-          "Restaurant Delivery",
-          textAlign: TextAlign.center,
-        )),
-      ),
-      body: FutureBuilder<User>(
-        future: User.load(),
-        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-          if (snapshot.hasData) {
-            _user = snapshot.data;
-            return Column(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.40,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.grey,
-                      child: Column(
+        resizeToAvoidBottomPadding: false,
+        appBar: AppBar(
+          title: new Center(
+              child: Text(
+            "Restaurant Delivery",
+            textAlign: TextAlign.center,
+          )),
+        ),
+        body: SingleChildScrollView(
+          reverse: true,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: bottom),
+            child: FutureBuilder<User>(
+              future: User.load(),
+              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                if (snapshot.hasData) {
+                  _user = snapshot.data;
+                  return Column(
+                    children: [
+                      Column(
                         children: [
-                          FutureBuilder<String>(
-                            future: _imagePath,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshotImg) {
-                              if (snapshotImg.hasData) {
-                                _user.picturePath = snapshotImg.data;
-                                _user.save();
-                              }
-                              return (_user.picturePath == null
-                                  ? Image.asset('images/basic_profile.png',
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.25,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.25)
-                                  : Image.file(
-                                      File(_user.picturePath),
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.25,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.25,
-                                    ));
-                            },
+                          Container(
+                            child: Column(
+                              children: [
+                                FutureBuilder<String>(
+                                  future: _imagePath,
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshotImg) {
+                                    if (snapshotImg.hasData) {
+                                      _user.picturePath = snapshotImg.data;
+                                      _user.save();
+                                    }
+                                    return (_user.picturePath == null
+                                        ? InkWell(
+                                            onTap: () {
+                                              print("aluh");
+                                            },
+                                            child: Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.25,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.25,
+                                              decoration: new BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: new DecorationImage(
+                                                    fit: BoxFit.fill,
+                                                    image: Image.asset(
+                                                            'images/basic_profile.png')
+                                                        .image,
+                                                  )),
+                                            ),
+                                          )
+                                        : InkWell(
+                                            onTap: () {
+                                              chooseImagePicker(context);
+                                              print("aluh");
+                                            },
+                                            child: Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.25,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.25,
+                                              decoration: new BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: new DecorationImage(
+                                                    fit: BoxFit.contain,
+                                                    image: Image.file(
+                                                      File(_user.picturePath),
+                                                    ).image,
+                                                  )),
+                                            ),
+                                          ));
+                                  },
+                                ),
+                                Text(
+                                  _user.firstname + " " + _user.lastname,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25),
+                                )
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                  alignment: Alignment.bottomCenter,
-                                  child: IconButton(
-                                      icon: Icon(Icons.add_a_photo),
-                                      onPressed: () {
-                                        setState(() {
-                                          _imagePath =
-                                              getImageFromCamera(context);
-                                        });
-                                      })),
-                              Container(
-                                  alignment: Alignment.bottomCenter,
-                                  child: IconButton(
-                                      icon: Icon(Icons.folder),
-                                      onPressed: () {
-                                        setState(() {
-                                          _imagePath =
-                                              getImageFromGallery(context);
-                                        });
-                                      })),
-                            ],
-                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.402,
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView(
+                                padding: const EdgeInsets.all(8),
+                                children: [
+                                  ProfileComponent(
+                                      fieldName: "Street",
+                                      fieldValue: _user.street),
+                                  ProfileComponent(
+                                      fieldName: "Zip Code",
+                                      fieldValue: _user.postalCode.toString()),
+                                  ProfileComponent(
+                                      fieldName: "City",
+                                      fieldValue: _user.city),
+                                  ProfileComponent(
+                                      fieldName: "Country",
+                                      fieldValue: _user.country),
+                                ]),
+                          )
                         ],
                       ),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.402,
-                      width: MediaQuery.of(context).size.width,
-                      child:
-                          ListView(padding: const EdgeInsets.all(8), children: [
-                        ProfileComponent(
-                            fieldName: "Firstname",
-                            fieldValue: _user.firstname),
-                        ProfileComponent(
-                            fieldName: "Lastname", fieldValue: _user.lastname),
-                        ProfileComponent(
-                            fieldName: "Street", fieldValue: _user.street),
-                        ProfileComponent(
-                            fieldName: "Zip Code",
-                            fieldValue: _user.postalCode.toString()),
-                        ProfileComponent(
-                            fieldName: "City", fieldValue: _user.city),
-                        ProfileComponent(
-                            fieldName: "Country", fieldValue: _user.country),
-                      ]),
-                    )
-                  ],
-                ),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            print("error");
-            return Text("Aaaaand, it's a crash. Whoops :c");
-          } else {
-            return SizedBox(
-              child: CircularProgressIndicator(),
-              width: 60,
-              height: 60,
-            );
-          }
-        },
-      ),
-      bottomNavigationBar: AnimatedBottomNavigationBar(
-        icons: iconList,
-        activeIndex: _bottomNavIndex,
-        backgroundColor: HexColor('#4285F4'),
-        gapLocation: GapLocation.none,
-        notchSmoothness: NotchSmoothness.verySmoothEdge,
-        leftCornerRadius: 0,
-        rightCornerRadius: 0,
-        onTap: (index) =>           Navigator.pushReplacementNamed(context, routeList[index]),
-      )
-    );
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  print("error");
+                  return Text("Aaaaand, it's a crash. Whoops :c");
+                } else {
+                  return SizedBox(
+                    child: CircularProgressIndicator(),
+                    width: 60,
+                    height: 60,
+                  );
+                }
+              },
+            ),
+          ),
+        ),
+        bottomNavigationBar: AnimatedBottomNavigationBar(
+          icons: iconList,
+          activeIndex: _bottomNavIndex,
+          backgroundColor: HexColor('#4285F4'),
+          gapLocation: GapLocation.none,
+          notchSmoothness: NotchSmoothness.verySmoothEdge,
+          leftCornerRadius: 0,
+          rightCornerRadius: 0,
+          onTap: (index) =>
+              Navigator.pushReplacementNamed(context, routeList[index]),
+        ));
   }
 }
