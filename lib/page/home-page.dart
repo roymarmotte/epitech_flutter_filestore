@@ -4,6 +4,7 @@ import 'package:epitech_flutter_filestore/components/dishComponent.dart';
 import 'package:epitech_flutter_filestore/data/dishes_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:epitech_flutter_filestore/page/cart-page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   final routeList = <Widget>[
     HomePage(),
     ProfilePage(),
+    CartPage(),
   ];
 
   void searchButtonRoad() {}
@@ -120,9 +122,8 @@ class _HomePageState extends State<HomePage> {
         notchSmoothness: NotchSmoothness.verySmoothEdge,
         leftCornerRadius: 0,
         rightCornerRadius: 0,
-        onTap: (index) => 
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()))
-        ,
+        onTap: (index) => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => routeList[index])),
       ),
     );
   }
