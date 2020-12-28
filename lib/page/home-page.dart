@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   final routeList = <String>[
     "/",
     "/profile",
+    "/cart"
   ];
 
   void searchButtonRoad() {}
