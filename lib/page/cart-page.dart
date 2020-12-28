@@ -4,7 +4,6 @@ import 'package:epitech_flutter_filestore/components/cartComponent.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/page/home-page.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
-import 'package:epitech_flutter_filestore/items/ingredient.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({Key key}) : super(key: key);

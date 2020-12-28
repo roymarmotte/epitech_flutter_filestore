@@ -27,7 +27,7 @@ class Dish {
   //A modifier (c'est juste pour les tests d'Hicham)
   static Future<Dish> load() async
   {
-      return await Dish(
+      return Dish(
       "Titre",
       "Description",
       [Ingredient("Sel", true), Ingredient("Poivre", true)],
