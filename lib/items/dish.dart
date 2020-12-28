@@ -6,11 +6,10 @@ class Dish {
   List<Ingredient> ingredients;
   String img;
   double price;
-  int quantity
+  int quantity;
 
   Dish(String title, String description, List<Ingredient> ingredients,
       String img, double price, int quantity) {
-
     this.title = title;
     this.quantity = quantity;
     this.description = description;
@@ -25,15 +24,15 @@ class Dish {
         ingredients.indexWhere((element) => element.title == ingredientToAdd);
     ingredients[indexIngredient] = newItem;
   }
+
   //A modifier (c'est juste pour les tests d'Hicham)
-  static Future<Dish> load() async
-  {
-      return Dish(
-      "Titre",
-      "Description",
-      [Ingredient("Sel", true), Ingredient("Poivre", true)],
-      "images/fromage.jpg",
-      10,
-      1); 
+  static Future<Dish> load() async {
+    return Dish(
+        "Titre",
+        "Description",
+        [Ingredient("Sel", true), Ingredient("Poivre", true)],
+        "images/fromage.jpg",
+        10,
+        1);
   }
 }
