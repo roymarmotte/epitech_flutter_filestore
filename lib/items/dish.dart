@@ -1,19 +1,19 @@
 import 'package:epitech_flutter_filestore/items/ingredient.dart';
 
 class Dish {
-  double price;
-  String img;
-  List<Ingredient> ingredients;
   String title;
   String description;
+  List<Ingredient> ingredients;
+  String img;
+  double price;
 
-  Dish(String title, String description, List<Ingredient> ingredient,
+  Dish(String title, String description, List<Ingredient> ingredients,
       String img, double price) {
     this.title = title;
     this.description = description;
+    this.ingredients = ingredients;
     this.img = img;
     this.price = price;
-    this.ingredients = ingredients;
   }
 
   void changeIngredient(String ingredientToAdd, bool precense) {
