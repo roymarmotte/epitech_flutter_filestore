@@ -1,8 +1,5 @@
 import 'dart:ui';
 
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:epitech_flutter_filestore/components/dishComponent.dart';
-import 'package:epitech_flutter_filestore/data/dishes_data.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,18 +14,6 @@ class DishesPage extends StatefulWidget {
 }
 
 class _DishesPageState extends State<DishesPage> {
-  var _bottomNavIndex = 0;
-  final iconList = <IconData>[
-    Icons.home,
-    Icons.account_circle_outlined,
-    Icons.shopping_basket_outlined,
-  ];
-
-  final routeList = <String>[
-    "/",
-    "/profile",
-  ];
-
   displayIngredients(List<Ingredient> dishIngredients) {
     return ListView.builder(
       shrinkWrap: true,
