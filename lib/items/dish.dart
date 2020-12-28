@@ -24,4 +24,15 @@ class Dish {
         ingredients.indexWhere((element) => element.title == ingredientToAdd);
     ingredients[indexIngredient] = newItem;
   }
+  //A modifier (c'est juste pour les tests d'Hicham)
+  static Future<Dish> load() async
+  {
+      return await Dish(
+      "Titre",
+      "Description",
+      [Ingredient("Sel", true), Ingredient("Poivre", true)],
+      "images/fromage.jpg",
+      10,
+      1); 
+  }
 }

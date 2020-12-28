@@ -14,13 +14,6 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  Dish test = Dish(
-      "Titre",
-      "Description",
-      [Ingredient("Sel", true), Ingredient("Poivre", true)],
-      "images/fromage.jpg",
-      10,
-      1);
   var _bottomNavIndex = 2;
   final iconList = <IconData>[
     Icons.home,
@@ -35,28 +28,38 @@ class _CartPageState extends State<CartPage> {
         appBar: AppBar(
           title: new Center(
             child: Text(
-              "Cart",
+              "Restaurant Delivery",
               textAlign: TextAlign.center,
             ),
           ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
         ),
-        body: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.50,
-              width: MediaQuery.of(context).size.width * 0.80,
-              child: ListView(
-                padding: const EdgeInsets.all(8),
-                children: [CartComponent(value: test)],
-              ),
-            )
-          ],
+        body: FutureBuilder(
+          future: Dish.load(),
+          builder: (BuildContext context, AsyncSnapshot<Dish> snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.50,
+                    width: MediaQuery.of(context).size.width * 0.80,
+                    child: ListView(
+                      padding: const EdgeInsets.all(8),
+                      children: [CartComponent(value: snapshot.data)],
+                    ),
+                  )
+                ],
+              );
+            } else if (snapshot.hasError) {
+              print("woops");
+              return null;
+            } else {
+              return SizedBox(
+                child: CircularProgressIndicator(),
+                width: 60,
+                height: 60,
+              );
+            }
+          },
         ),
         bottomNavigationBar: AnimatedBottomNavigationBar(
           icons: iconList,
