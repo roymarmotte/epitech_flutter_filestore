@@ -1,6 +1,7 @@
 import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../page/dishes-page.dart';
 
 class DishComponent extends StatelessWidget {
   DishComponent(this.dish);
@@ -8,6 +9,7 @@ class DishComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Card(
           child: ListTile(
         leading: Container(
@@ -23,7 +25,9 @@ class DishComponent extends StatelessWidget {
         subtitle: Text(this.dish.description),
         isThreeLine: true,
         trailing: Icon(Icons.arrow_forward_ios),
-      ),
-    );
+        onTap: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => DishesPage(dish)));
+        });
   }
 }
