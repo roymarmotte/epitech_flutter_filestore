@@ -26,6 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final routeList = <String>[
     "/",
     "/profile",
+    "/cart"
   ];
 
   void chooseImagePicker(BuildContext context) {
