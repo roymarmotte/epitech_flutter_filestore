@@ -9,7 +9,9 @@ class DishComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+
+    return Card(
+          child: ListTile(
         leading: Container(
           width: 40,
           height: 40,
