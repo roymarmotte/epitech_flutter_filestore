@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
@@ -7,6 +6,7 @@ import 'package:epitech_flutter_filestore/data/dishes_data.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:epitech_flutter_filestore/items/ingredient.dart';
 
 class DishesPage extends StatefulWidget {
   final Dish dish;
@@ -29,9 +29,27 @@ class _DishesPageState extends State<DishesPage> {
     "/profile",
   ];
 
+  displayIngredients(List<Ingredient> dishIngredients) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      padding: const EdgeInsets.all(5),
+      itemCount: dishIngredients.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+            margin: EdgeInsets.only(top: 5),
+            child: Text('${dishIngredients[index].title}',
+                style: TextStyle(
+                  color: Color.fromRGBO(66, 66, 66, 1),
+                  fontFamily: "SFProDisplay",
+                  fontStyle: FontStyle.normal,
+                )));
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.dish.ingredients);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -67,15 +85,109 @@ class _DishesPageState extends State<DishesPage> {
           Container(
             child: Image.network(widget.dish.img),
           ),
-          /* ListView.builder(
-              itemCount: widget.dish.ingredients.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  height: 50,
-                  child: Center(
-                      child: Text('Entry ${widget.dish.ingredients[index]}')),
-                );
-              }) */
+          Container(
+            margin: EdgeInsets.only(top: 13),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Ingredients",
+                  style: TextStyle(
+                    color: Color(0xff414141),
+                    fontSize: 20,
+                    fontFamily: "SFProDisplay",
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Container(
+                  width: 100,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(19),
+                    color: Color(0xffe82e47),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          displayIngredients(widget.dish.ingredients),
+          Container(
+            margin: EdgeInsets.only(top: 20, bottom: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 100,
+                  height: 58,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xfff0f0f0),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 20,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "-",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xff7e8389),
+                          fontSize: 22,
+                        ),
+                      ),
+                      SizedBox(width: 23),
+                      Text(
+                        "1",
+                        style: TextStyle(
+                          color: Color(0xff414141),
+                          fontSize: 20,
+                          fontFamily: "SF Pro Display",
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(width: 23),
+                      Text(
+                        "+",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xff7e8389),
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 58,
+                  child: Container(
+                    width: 225,
+                    height: 58,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color(0xffe82e47),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Add to cart",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontFamily: "SFProDisplay",
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
