@@ -72,7 +72,7 @@ class Dish {
   static Future<List<Dish>> load() async {
     final pref = await SharedPreferences.getInstance();
     final loaded = pref.getString('dish');
-    List<Dish> result = List();
+    List<Dish> result = [];
 
     if (loaded == null) return result;
 
