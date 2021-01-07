@@ -33,13 +33,7 @@ class _HomePageState extends State<HomePage> {
     Icons.shopping_basket_outlined,
   ];
 
-  final routeList = <String>[
-    "/",
-    "/profile",
-    "/cart"
-  ];
-
-  void searchButtonRoad() {}
+  final routeList = <String>["/", "/profile", "/cart"];
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +114,8 @@ class _HomePageState extends State<HomePage> {
         notchSmoothness: NotchSmoothness.verySmoothEdge,
         leftCornerRadius: 0,
         rightCornerRadius: 0,
-        onTap: (index) => 
-          Navigator.pushReplacementNamed(context, routeList[index])
-        ,
+        onTap: (index) =>
+            Navigator.pushReplacementNamed(context, routeList[index]),
       ),
     );
   }
