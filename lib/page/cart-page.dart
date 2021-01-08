@@ -34,7 +34,7 @@ class _CartPageState extends State<CartPage> {
         ),
         body: FutureBuilder(
           future: Dish.load(),
-          builder: (BuildContext context, AsyncSnapshot<Dish> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<List<Dish>> snapshot) {
             if (snapshot.hasData) {
               return Column(
                 children: [
@@ -43,7 +43,7 @@ class _CartPageState extends State<CartPage> {
                     width: MediaQuery.of(context).size.width * 0.80,
                     child: ListView(
                       padding: const EdgeInsets.all(8),
-                      children: [CartComponent(value: snapshot.data)],
+                      children: [CartComponent(value: snapshot.data.first)],
                     ),
                   )
                 ],
