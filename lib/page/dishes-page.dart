@@ -18,17 +18,12 @@ class _DishesPageState extends State<DishesPage> {
     return ListView.builder(
       shrinkWrap: true,
       physics: ClampingScrollPhysics(),
-      padding: const EdgeInsets.all(5),
+      padding: EdgeInsets.all(5),
       itemCount: dishIngredients.length,
       itemBuilder: (BuildContext context, int index) {
         return Container(
             margin: EdgeInsets.only(top: 5),
-            child: Text('${dishIngredients[index].title}',
-                style: TextStyle(
-                  color: Color.fromRGBO(66, 66, 66, 1),
-                  fontFamily: "SFProDisplay",
-                  fontStyle: FontStyle.normal,
-                )));
+            child: Text('${dishIngredients[index].title}'));
       },
     );
   }
@@ -36,36 +31,19 @@ class _DishesPageState extends State<DishesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-      ),
+      appBar: AppBar(),
       body: ListView(
         padding: EdgeInsets.all(20),
         children: <Widget>[
           Text(
             widget.dish.title,
-            style: TextStyle(
-              fontSize: 40,
-              letterSpacing: -0.08,
-              color: Color.fromRGBO(66, 66, 66, 1),
-              fontFamily: 'BluuSuuperstar',
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headline2,
           ),
           Container(
               margin: EdgeInsets.only(top: 8, bottom: 20),
               child: Text(
                 widget.dish.description,
-                style: TextStyle(
-                  fontSize: 15,
-                  letterSpacing: -0.08,
-                  color: Color.fromRGBO(126, 131, 137, 1),
-                  fontFamily: 'SFProDisplay',
-                ),
+                style: Theme.of(context).textTheme.subtitle1,
               )),
           Container(
             child: Image.network(widget.dish.img),
@@ -75,21 +53,14 @@ class _DishesPageState extends State<DishesPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Ingredients",
-                  style: TextStyle(
-                    color: Color(0xff414141),
-                    fontSize: 20,
-                    fontFamily: "SFProDisplay",
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                Text("Ingredients",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 Container(
                   width: 100,
                   height: 3,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(19),
-                    color: Color(0xffe82e47),
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ],
@@ -102,16 +73,11 @@ class _DishesPageState extends State<DishesPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 100,
-                  height: 58,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Color(0xfff0f0f0),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 20,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -120,52 +86,34 @@ class _DishesPageState extends State<DishesPage> {
                       Text(
                         "-",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xff7e8389),
-                          fontSize: 22,
-                        ),
+                        style: TextStyle(fontSize: 22),
                       ),
                       SizedBox(width: 23),
                       Text(
                         "1",
-                        style: TextStyle(
-                          color: Color(0xff414141),
-                          fontSize: 20,
-                          fontFamily: "SF Pro Display",
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.w700),
                       ),
                       SizedBox(width: 23),
                       Text(
                         "+",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xff7e8389),
-                          fontSize: 22,
-                        ),
+                        style: TextStyle(fontSize: 22),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  height: 58,
-                  child: Container(
-                    width: 225,
-                    height: 58,
-                    decoration: BoxDecoration(
+                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 20),
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Color(0xffe82e47),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Add to cart",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: "SFProDisplay",
-                          fontWeight: FontWeight.w700,
-                        ),
+                      color: Theme.of(context).primaryColor),
+                  child: Center(
+                    child: Text(
+                      "Add to cart",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
