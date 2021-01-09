@@ -73,7 +73,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
         appBar: AppBar(),
         body: ValueListenableBuilder(
           valueListenable: editionCheck,
@@ -145,18 +144,38 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         Expanded(
-          flex: 6,
+          flex: 7,
           child: ListView(children: [
             ProfileComponent(
-                label: "First Name", fieldName: "firstname", user: _user),
+                label: "First Name",
+                fieldName: "firstname",
+                user: _user,
+                fillHint: AutofillHints.givenName),
             ProfileComponent(
-                label: "Last Name", fieldName: "lastname", user: _user),
-            ProfileComponent(label: "Street", fieldName: "street", user: _user),
+                label: "Last Name",
+                fieldName: "lastname",
+                user: _user,
+                fillHint: AutofillHints.familyName),
             ProfileComponent(
-                fieldName: "postalCode", label: "ZIP Code", user: _user),
-            ProfileComponent(fieldName: "city", label: "City", user: _user),
+                label: "Street",
+                fieldName: "street",
+                user: _user,
+                fillHint: AutofillHints.streetAddressLevel1),
             ProfileComponent(
-                label: "Country", fieldName: "country", user: _user),
+                fieldName: "postalCode",
+                label: "ZIP Code",
+                user: _user,
+                fillHint: AutofillHints.postalCode),
+            ProfileComponent(
+                fieldName: "city",
+                label: "City",
+                user: _user,
+                fillHint: AutofillHints.addressCity),
+            ProfileComponent(
+                label: "Country",
+                fieldName: "country",
+                user: _user,
+                fillHint: AutofillHints.countryName),
           ]),
         ),
       ],
