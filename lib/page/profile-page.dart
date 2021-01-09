@@ -63,17 +63,14 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-/* OutlineButton(
-                                onPressed: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => FavoritesPage())),
-                                child: Text("Click here to see the favorites"),
-                              ) */
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            appBarFavDishes(context),
+          ],
+        ),
         body: ValueListenableBuilder(
           valueListenable: editionCheck,
           builder: (context, value, widget) {
@@ -110,6 +107,32 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: (index) =>
               Navigator.pushReplacementNamed(context, routeList[index]),
         ));
+  }
+
+  Container appBarFavDishes(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 10),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => FavoritesPage()));
+        },
+        child: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: 8),
+              child: Icon(Icons.star_border),
+            ),
+            Center(
+              child: Text(
+                "Favorites dishes",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Column displayProfilPage(BuildContext context) {
