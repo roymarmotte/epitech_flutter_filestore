@@ -32,7 +32,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
           future: User.load(),
           builder: (context, AsyncSnapshot<User> snapshot) {
             if (snapshot.hasData) {
-              return Column(
+              return ListView(
+                padding: EdgeInsets.all(9),
                 children: <Widget>[...listFavorites(snapshot.data.favorites)],
               );
             } else if (snapshot.hasError) {
