@@ -132,11 +132,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     chooseImagePicker(context);
                   },
                   child: CircleAvatar(
-                    backgroundColor: Colors.green,
                     radius: 100,
-                    child: _user.picturePath == null
-                        ? Image.asset('images/basic_profile.png')
-                        : Image.file(File(_user.picturePath)),
+                    backgroundImage: _user.picturePath == null
+                        ? AssetImage('images/basic_profile.png')
+                        : AssetImage(_user.picturePath),
                   ),
                 ),
               );
