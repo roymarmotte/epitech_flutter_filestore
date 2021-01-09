@@ -35,8 +35,8 @@ class DishComponent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(
-                        flex: 5,
+                      Expanded(
+                        flex: 8,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -54,8 +54,8 @@ class DishComponent extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Flexible(
-                        flex: 1,
+                      Expanded(
+                        flex: 2,
                         child: Text(
                           dish.price.toString() + " €",
                           style: TextStyle(
@@ -63,6 +63,7 @@ class DishComponent extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
+                          textAlign: TextAlign.end,
                         ),
                       )
                     ],
