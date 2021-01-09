@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/components/cartComponent.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:epitech_flutter_filestore/page/home-page.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
 
 class CartPage extends StatefulWidget {
@@ -63,7 +62,7 @@ class _CartPageState extends State<CartPage> {
         bottomNavigationBar: AnimatedBottomNavigationBar(
           icons: iconList,
           activeIndex: _bottomNavIndex,
-          backgroundColor: HexColor('#4285F4'),
+          backgroundColor: Theme.of(context).primaryColor,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 0,

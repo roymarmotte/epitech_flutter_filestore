@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:epitech_flutter_filestore/page/home-page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:epitech_flutter_filestore/items/user.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
     Icons.account_circle_outlined,
     Icons.shopping_basket_outlined,
   ];
-  final routeList = <String>[
-    "/",
-    "/profile",
-    "/cart"
-  ];
+  final routeList = <String>["/", "/profile", "/cart"];
 
   void chooseImagePicker(BuildContext context) {
     Widget cancelButton = FlatButton(
@@ -192,7 +187,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           user: _user),
                                     ]),
                               ),
-                              Text("You can edit by clicking on informations/picture")
+                              Text(
+                                  "You can edit by clicking on informations/picture")
                             ],
                           ),
                         ],
@@ -216,7 +212,7 @@ class _ProfilePageState extends State<ProfilePage> {
         bottomNavigationBar: AnimatedBottomNavigationBar(
           icons: iconList,
           activeIndex: _bottomNavIndex,
-          backgroundColor: HexColor('#4285F4'),
+          backgroundColor: Theme.of(context).primaryColor,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 0,
