@@ -190,6 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               Text(
                                   "You can edit by clicking on informations/picture"),
+                              // C'est ici pour le bouton accès aux favoris au cas où Louis :^)
                               OutlineButton(
                                 onPressed: () => Navigator.of(context).push(
                                     MaterialPageRoute(
