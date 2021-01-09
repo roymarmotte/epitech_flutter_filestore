@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:epitech_flutter_filestore/components/dishComponent.dart';
-import 'package:epitech_flutter_filestore/data/dishes_data.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:flutter/foundation.dart';
 import 'package:epitech_flutter_filestore/items/user.dart';
