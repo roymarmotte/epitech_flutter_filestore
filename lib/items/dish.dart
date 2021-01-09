@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:epitech_flutter_filestore/items/ingredient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,8 +12,8 @@ class Dish {
   int quantity;
 
   Dish(String title, String description, List<Ingredient> ingredients,
-      String img, double price, int quantity) {
-    this.id = 0;
+      String img, double price, int quantity, int id) {
+    this.id = id;
     this.title = title;
     this.quantity = quantity;
     this.description = description;
@@ -24,14 +22,19 @@ class Dish {
     this.price = price;
   }
 
-  Dish.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        quantity = json['quantity'],
-        description = json['description'],
-        ingredients = json['ingredients'],
-        img = json['img'],
-        price = json['price'];
+  Dish.fromJson(Map<String, dynamic> json) {
+    List<Ingredient> ingredientsConverted = [];
+    for (var item in json['ingredients'])
+      ingredientsConverted.add(Ingredient.fromJson(item));
+
+    id = json['id'];
+    title = json['title'];
+    quantity = json['quantity'];
+    description = json['description'];
+    ingredients = ingredientsConverted;
+    img = json['img'];
+    price = json['price'];
+  }
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
@@ -55,12 +58,9 @@ class Dish {
   }
 
   void save() async {
-    Random rng = new Random();
     var actualList = await Dish.load();
 
-    do {
-      id = rng.nextInt(100);
-    } while (isAlreadyExist(actualList, id));
+    if (isAlreadyExist(actualList, id)) id = actualList.last.id + 1;
 
     actualList.add(this);
     actualList.map((e) => e.toJson()).toList();
@@ -93,5 +93,10 @@ class Dish {
 
     final pref = await SharedPreferences.getInstance();
     pref.setString('dish', jsonEncode(actualList));
+  }
+
+  static void reset() async {
+    final pref = await SharedPreferences.getInstance();
+    pref.setString('dish', null);
   }
 }

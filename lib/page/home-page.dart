@@ -38,78 +38,40 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: new Center(
-          child: Text(
-            "Restaurant Delivery",
-            textAlign: TextAlign.center,
-          ),
-        ),
+        title: Text("Your Restaurant Delivery App"),
       ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(10.0),
-                width: MediaQuery.of(context).size.width * 0.80,
-                height: MediaQuery.of(context).size.height *
-                    0.10, //MediaQuery.of(context).size.height % 10,
-                child: TextField(
-                  controller: _searchBarController,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                      hintText: "Search a dish or an entrée...",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(90))),
-                ),
-              )
-            ],
+          Container(
+            margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+            height: MediaQuery.of(context).size.height * 0.06,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey[350],
+            ),
+            child: TextField(
+              controller: _searchBarController,
+              autocorrect: false,
+              maxLines: 1,
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                  hintText: "Search a dish or an entrée...",
+                  hintStyle: TextStyle(color: Colors.black87),
+                  prefixIcon: Icon(Icons.search, color: Colors.black87),
+                  border: InputBorder.none),
+            ),
           ),
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.only(left: 50.0),
-                child: Text(
-                  'Choose a Categorie:',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.80,
-                height: MediaQuery.of(context).size.height * 0.05,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    Wrap(
-                      spacing: 10,
-                      children: <Widget>[
-                        Chip(label: const Text("Entrée")),
-                        Chip(label: const Text("Plat Chauds")),
-                        Chip(label: const Text("Plats Froids")),
-                        Chip(label: const Text("Desserts"))
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-          ...filterDishes(_searchBarController.text)
+          filterDishes(_searchBarController.text, context)
         ],
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
         icons: iconList,
         activeIndex: _bottomNavIndex,
-        backgroundColor: HexColor('#4285F4'),
+        activeColor: Colors.white,
+        backgroundColor: Theme.of(context).primaryColor,
         gapLocation: GapLocation.none,
         notchSmoothness: NotchSmoothness.verySmoothEdge,
         leftCornerRadius: 0,
@@ -121,21 +83,21 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-filterDishes(String searchBarText) {
+Container filterDishes(String searchBarText, BuildContext context) {
   var filtredDishes = initialDish.where((element) =>
       element.title.toLowerCase().contains(searchBarText.toLowerCase()));
   List<Widget> widgetDish = filtredDishes.map((e) => DishComponent(e)).toList();
-  return widgetDish;
-}
 
-class HexColor extends Color {
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
-
-  static int _getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll('#', '');
-    if (hexColor.length == 6) {
-      hexColor = 'FF' + hexColor;
-    }
-    return int.parse(hexColor, radix: 16);
-  }
+  return Container(
+    height: MediaQuery.of(context).size.height * 0.69,
+    width: MediaQuery.of(context).size.width,
+    child: ListView.separated(
+        padding: EdgeInsets.all(8),
+        itemCount: widgetDish.length,
+        separatorBuilder: (BuildContext context, int index) =>
+            Divider(color: Colors.white),
+        itemBuilder: (BuildContext context, int index) {
+          return widgetDish[index];
+        }),
+  );
 }

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/components/cartComponent.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:epitech_flutter_filestore/page/home-page.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
 
 class CartPage extends StatefulWidget {
@@ -36,21 +35,24 @@ class _CartPageState extends State<CartPage> {
           future: Dish.load(),
           builder: (BuildContext context, AsyncSnapshot<List<Dish>> snapshot) {
             if (snapshot.hasData) {
-              return Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.50,
-                    width: MediaQuery.of(context).size.width * 0.80,
-                    child: ListView(
-                      padding: const EdgeInsets.all(8),
-                      children: [CartComponent(value: snapshot.data.first)],
-                    ),
-                  )
-                ],
-              );
+              if (snapshot.data.isEmpty)
+                return Column();
+              else
+                return Column(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.50,
+                      width: MediaQuery.of(context).size.width * 0.80,
+                      child: ListView(
+                        padding: const EdgeInsets.all(8),
+                        children: [CartComponent(value: snapshot.data.first)],
+                      ),
+                    )
+                  ],
+                );
             } else if (snapshot.hasError) {
-              print("woops");
-              return null;
+              print("error");
+              return SnackBar(content: Text('${snapshot.error}'));
             } else {
               return SizedBox(
                 child: CircularProgressIndicator(),
@@ -63,7 +65,7 @@ class _CartPageState extends State<CartPage> {
         bottomNavigationBar: AnimatedBottomNavigationBar(
           icons: iconList,
           activeIndex: _bottomNavIndex,
-          backgroundColor: HexColor('#4285F4'),
+          backgroundColor: Theme.of(context).primaryColor,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 0,
