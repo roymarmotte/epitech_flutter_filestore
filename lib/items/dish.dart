@@ -58,9 +58,9 @@ class Dish {
     Random rng = new Random();
     var actualList = await Dish.load();
 
-    do {
+    while (isAlreadyExist(actualList, id)) {
       id = rng.nextInt(100);
-    } while (isAlreadyExist(actualList, id));
+    }
 
     actualList.add(this);
     actualList.map((e) => e.toJson()).toList();
