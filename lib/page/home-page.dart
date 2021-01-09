@@ -89,7 +89,7 @@ Container filterDishes(String searchBarText, BuildContext context) {
   List<Widget> widgetDish = filtredDishes.map((e) => DishComponent(e)).toList();
 
   return Container(
-    height: MediaQuery.of(context).size.height * 0.70,
+    height: MediaQuery.of(context).size.height * 0.69,
     width: MediaQuery.of(context).size.width,
     child: ListView.separated(
         padding: EdgeInsets.all(8),
