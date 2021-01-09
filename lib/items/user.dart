@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,15 +15,20 @@ class User {
   User(this.firstname, this.lastname, this.street, this.postalCode, this.city,
       this.country, this.picturePath, this.favorites);
 
-  User.fromJson(Map<String, dynamic> json)
-      : firstname = json['firstname'],
-        lastname = json['lastname'],
-        street = json['street'],
-        postalCode = json['postalCode'],
-        city = json['city'],
-        country = json['country'],
-        picturePath = json['picturePath'],
-        favorites = json['favorites'];
+  User.fromJson(Map<String, dynamic> json) {
+    List<Dish> favoritesConverted = [];
+    for (var item in json['favorites'])
+      favoritesConverted.add(Dish.fromJson(item));
+
+    firstname = json['firstname'];
+    lastname = json['lastname'];
+    street = json['street'];
+    postalCode = json['postalCode'];
+    city = json['city'];
+    country = json['country'];
+    picturePath = json['picturePath'];
+    favorites = favoritesConverted;
+  }
   Map<String, dynamic> toJson() => {
         'firstname': firstname,
         'lastname': lastname,
@@ -42,10 +45,10 @@ class User {
     return false;
   }
 
-  void saveFavs(Dish toAdd) {
-    Random rng = new Random();
-    while (isAlreadyFavs(toAdd.id)) toAdd.id = rng.nextInt(100);
+  Dish saveFavs(Dish toAdd) {
+    if (isAlreadyFavs(toAdd.id)) toAdd.id = favorites.last.id + 1;
     favorites.add(toAdd);
+    return toAdd;
   }
 
   void updateFavs(Dish toUpdate) {
@@ -71,12 +74,17 @@ class User {
     pref.setString('user', jsonEncode(this.toJson()));
   }
 
+  static void reset() async {
+    final pref = await SharedPreferences.getInstance();
+    pref.setString('user', null);
+  }
+
   static Future<User> load() async {
     final pref = await SharedPreferences.getInstance();
     final loaded = pref.getString('user');
     if (loaded == null)
       return User("James", "Cameron", "1 Boulevard du Général", "13086",
-          "Paris", "France", null, null);
+          "Paris", "France", null, []);
     return User.fromJson(json.decode(loaded));
   }
 }
