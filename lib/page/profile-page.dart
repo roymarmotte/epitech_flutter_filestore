@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:epitech_flutter_filestore/page/favorites-page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:epitech_flutter_filestore/items/user.dart';
 import 'package:flutter/material.dart';
@@ -188,14 +189,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ]),
                               ),
                               Text(
-                                  "You can edit by clicking on informations/picture")
+                                  "You can edit by clicking on informations/picture"),
+                              OutlineButton(
+                                onPressed: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => FavoritesPage())),
+                                child: Text("Click here to see the favorites"),
+                              )
                             ],
                           ),
                         ],
                       );
                     } else if (snapshot.hasError) {
                       print("error");
-                      return Text("Aaaaand, it's a crash. Whoops :c");
+                      return SnackBar(content: Text('${snapshot.error}'));
                     } else {
                       return SizedBox(
                         child: CircularProgressIndicator(),
