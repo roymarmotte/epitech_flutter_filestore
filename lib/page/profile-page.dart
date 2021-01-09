@@ -24,9 +24,9 @@ class _ProfilePageState extends State<ProfilePage> {
   ];
   final routeList = <String>["/", "/profile", "/cart"];
 
-  void chooseImagePicker(BuildContext context) {
-    Widget cancelButton = FlatButton(
-      child: Text("Take a picture"),
+  chooseImagePicker(BuildContext context) {
+    Widget fromCameraButton = FlatButton(
+      child: Text("Take a picture with your camera"),
       onPressed: () {
         setState(() {
           _imagePath = getImageFromCamera(context);
@@ -34,8 +34,8 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.of(context).pop();
       },
     );
-    Widget openSettingsButton = FlatButton(
-      child: Text("Choose a picture already saved"),
+    Widget fromGalleryButton = FlatButton(
+      child: Text("Choose a picture from your gallery"),
       onPressed: () {
         setState(() {
           _imagePath = getImageFromGallery(context);
@@ -43,12 +43,15 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.of(context).pop();
       },
     );
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
 
     AlertDialog alert = AlertDialog(
-      actions: [
-        openSettingsButton,
-        cancelButton,
-      ],
+      actions: [fromGalleryButton, fromCameraButton, cancelButton],
     );
 
     showDialog(
@@ -61,151 +64,30 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          title: new Center(
-              child: Text(
-            "Restaurant Delivery",
-            textAlign: TextAlign.center,
-          )),
-        ),
+        appBar: AppBar(),
         body: ValueListenableBuilder(
           valueListenable: editionCheck,
           builder: (context, value, widget) {
-            return SingleChildScrollView(
-              reverse: true,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: bottom),
-                child: FutureBuilder<User>(
-                  future: User.load(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<User> snapshot) {
-                    if (snapshot.hasData) {
-                      _user = snapshot.data;
-                      return Column(
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                child: Column(
-                                  children: [
-                                    FutureBuilder<String>(
-                                      future: _imagePath,
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<String> snapshotImg) {
-                                        if (snapshotImg.hasData) {
-                                          _user.picturePath = snapshotImg.data;
-                                          _user.save();
-                                        }
-                                        return (_user.picturePath == null
-                                            ? InkWell(
-                                                onTap: () {
-                                                  chooseImagePicker(context);
-                                                },
-                                                child: Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.25,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.25,
-                                                  decoration: new BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      image:
-                                                          new DecorationImage(
-                                                        fit: BoxFit.fill,
-                                                        image: Image.asset(
-                                                                'images/basic_profile.png')
-                                                            .image,
-                                                      )),
-                                                ),
-                                              )
-                                            : InkWell(
-                                                onTap: () {
-                                                  chooseImagePicker(context);
-                                                },
-                                                child: Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.25,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.25,
-                                                  decoration: new BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      image:
-                                                          new DecorationImage(
-                                                        fit: BoxFit.contain,
-                                                        image: Image.file(
-                                                          File(_user
-                                                              .picturePath),
-                                                        ).image,
-                                                      )),
-                                                ),
-                                              ));
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.402,
-                                width: MediaQuery.of(context).size.width,
-                                child: ListView(
-                                    padding: const EdgeInsets.all(8),
-                                    children: [
-                                      ProfileComponent(
-                                          label: "First Name",
-                                          fieldName: "firstname",
-                                          user: _user),
-                                      ProfileComponent(
-                                          label: "Last Name",
-                                          fieldName: "lastname",
-                                          user: _user),
-                                      ProfileComponent(
-                                          label: "Street",
-                                          fieldName: "street",
-                                          user: _user),
-                                      ProfileComponent(
-                                          fieldName: "postalCode",
-                                          label: "ZIP Code",
-                                          user: _user),
-                                      ProfileComponent(
-                                          fieldName: "city",
-                                          label: "City",
-                                          user: _user),
-                                      ProfileComponent(
-                                          label: "Country",
-                                          fieldName: "country",
-                                          user: _user),
-                                    ]),
-                              ),
-                              Text(
-                                  "You can edit by clicking on informations/picture")
-                            ],
-                          ),
-                        ],
-                      );
-                    } else if (snapshot.hasError) {
-                      print("error");
-                      return Text("Aaaaand, it's a crash. Whoops :c");
-                    } else {
-                      return SizedBox(
-                        child: CircularProgressIndicator(),
-                        width: 60,
-                        height: 60,
-                      );
-                    }
-                  },
-                ),
-              ),
+            return FutureBuilder<User>(
+              future: User.load(),
+              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                if (snapshot.hasData) {
+                  _user = snapshot.data;
+                  return displayProfilPage(context);
+                } else if (snapshot.hasError) {
+                  print("Profil page snapshot error:\n${snapshot.error}");
+                  return Text(
+                      "An error occured. Unable to load your profil.\nTry restarting the application.\n\n${snapshot.error}");
+                } else {
+                  return SizedBox(
+                    child: CircularProgressIndicator(),
+                    width: 60,
+                    height: 60,
+                  );
+                }
+              },
             );
           },
         ),
@@ -213,6 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
           icons: iconList,
           activeIndex: _bottomNavIndex,
           backgroundColor: Theme.of(context).primaryColor,
+          activeColor: Colors.white,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 0,
@@ -220,5 +103,55 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: (index) =>
               Navigator.pushReplacementNamed(context, routeList[index]),
         ));
+  }
+
+  Column displayProfilPage(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          flex: 4,
+          child: FutureBuilder<String>(
+            future: _imagePath,
+            builder: (BuildContext context, AsyncSnapshot<String> snapshotImg) {
+              if (snapshotImg.hasData) {
+                _user.picturePath = snapshotImg.data;
+                _user.save();
+              }
+              return Center(
+                child: InkWell(
+                  onTap: () {
+                    chooseImagePicker(context);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.green,
+                    radius: 100,
+                    child: _user.picturePath == null
+                        ? Image.asset('images/basic_profile.png')
+                        : Image.file(File(_user.picturePath)),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        Expanded(
+          flex: 6,
+          child: ListView(children: [
+            ProfileComponent(
+                label: "First Name", fieldName: "firstname", user: _user),
+            ProfileComponent(
+                label: "Last Name", fieldName: "lastname", user: _user),
+            ProfileComponent(label: "Street", fieldName: "street", user: _user),
+            ProfileComponent(
+                fieldName: "postalCode", label: "ZIP Code", user: _user),
+            ProfileComponent(fieldName: "city", label: "City", user: _user),
+            ProfileComponent(
+                label: "Country", fieldName: "country", user: _user),
+          ]),
+        ),
+      ],
+    );
   }
 }
