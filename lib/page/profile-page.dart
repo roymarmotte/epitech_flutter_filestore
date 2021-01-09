@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/page/favorites-page.dart';
 import 'package:flutter/foundation.dart';
