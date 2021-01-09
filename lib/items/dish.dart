@@ -94,4 +94,9 @@ class Dish {
     final pref = await SharedPreferences.getInstance();
     pref.setString('dish', jsonEncode(actualList));
   }
+
+  static void reset() async {
+    final pref = await SharedPreferences.getInstance();
+    pref.setString('dish', null);
+  }
 }
