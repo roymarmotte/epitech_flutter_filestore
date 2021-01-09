@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:epitech_flutter_filestore/page/favorites-page.dart';
 import 'package:epitech_flutter_filestore/page/home-page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:epitech_flutter_filestore/items/user.dart';
@@ -23,11 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
     Icons.account_circle_outlined,
     Icons.shopping_basket_outlined,
   ];
-  final routeList = <String>[
-    "/",
-    "/profile",
-    "/cart"
-  ];
+  final routeList = <String>["/", "/profile", "/cart"];
 
   void chooseImagePicker(BuildContext context) {
     Widget cancelButton = FlatButton(
@@ -192,14 +189,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                           user: _user),
                                     ]),
                               ),
-                              Text("You can edit by clicking on informations/picture")
+                              Text(
+                                  "You can edit by clicking on informations/picture"),
+                              OutlineButton(
+                                onPressed: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => FavoritesPage())),
+                                child: Text("Click here to see the favorites"),
+                              )
                             ],
                           ),
                         ],
                       );
                     } else if (snapshot.hasError) {
                       print("error");
-                      return Text("Aaaaand, it's a crash. Whoops :c");
+                      return SnackBar(content: Text('${snapshot.error}'));
                     } else {
                       return SizedBox(
                         child: CircularProgressIndicator(),
