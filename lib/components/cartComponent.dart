@@ -1,3 +1,4 @@
+import 'package:epitech_flutter_filestore/items/user.dart';
 import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:flutter/foundation.dart';
@@ -18,7 +19,11 @@ class _CartComponentState extends State<CartComponent> {
   Dish value;
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return FutureBuilder<User>(
+      future: User.load(),
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        if (snapshot.hasData) {
+          return Card(
       child: Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,8 +67,16 @@ class _CartComponentState extends State<CartComponent> {
                   InkWell(
                     onTap: () {
                       setState(() {
+                        int i = 0;
                         if (value.quantity < 1) value.quantity = 1;
                         value.quantity -= 1;
+                        while (i < snapshot.data.cart.length) {
+                          if (value.id == snapshot.data.cart[i].id) {
+                            snapshot.data.cart[i].quantity = value.quantity;
+                            i++;
+                          }
+                        }
+                        snapshot.data.save();
                       });
                     },
                     child: Text(
@@ -81,7 +94,15 @@ class _CartComponentState extends State<CartComponent> {
                   InkWell(
                     onTap: () {
                       setState(() {
+                        int i = 0;
                         value.quantity += 1;
+                        while (i < snapshot.data.cart.length) {
+                          if (value.id == snapshot.data.cart[i].id) {
+                            snapshot.data.cart[i].quantity = value.quantity;
+                            i++;
+                          }
+                        }
+                        snapshot.data.save();
                       });
                     },
                     child: Text(
@@ -94,6 +115,11 @@ class _CartComponentState extends State<CartComponent> {
           ],
         ),
       ),
+    );
+        }else {
+          return Column();
+        }
+      }
     );
   }
 }
