@@ -34,14 +34,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: new Center(
-            child: Text(
-              "Restaurant Delivery",
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
+        appBar: AppBar(),
         body: FutureBuilder(
           future: Dish.load(),
           builder: (BuildContext context, AsyncSnapshot<List<Dish>> snapshot) {
@@ -103,6 +96,7 @@ class _CartPageState extends State<CartPage> {
           icons: iconList,
           activeIndex: _bottomNavIndex,
           backgroundColor: Theme.of(context).primaryColor,
+          activeColor: Colors.white,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 0,

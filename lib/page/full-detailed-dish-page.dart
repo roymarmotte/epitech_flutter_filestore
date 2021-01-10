@@ -5,16 +5,17 @@ import 'package:epitech_flutter_filestore/items/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:epitech_flutter_filestore/items/ingredient.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class DishesPage extends StatefulWidget {
+class FullDetailedDishPage extends StatefulWidget {
   final Dish dish;
-  DishesPage(this.dish);
+  FullDetailedDishPage(this.dish);
 
   @override
-  _DishesPageState createState() => _DishesPageState();
+  _FullDetailedDishPageState createState() => _FullDetailedDishPageState();
 }
 
-class _DishesPageState extends State<DishesPage> {
+class _FullDetailedDishPageState extends State<FullDetailedDishPage> {
   IconData star;
   Dish dish;
 
@@ -123,8 +124,7 @@ class _DishesPageState extends State<DishesPage> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    if (dish.quantity < 1)
-                                      dish.quantity = 1;
+                                    if (dish.quantity < 1) dish.quantity = 1;
                                     dish.quantity -= 1;
                                   });
                                 },
@@ -162,6 +162,17 @@ class _DishesPageState extends State<DishesPage> {
                             child: InkWell(
                               onTap: () {
                                 dish.save();
+                                Fluttertoast.showToast(
+                                    msg: dish.quantity.toString() +
+                                        "x \"" +
+                                        dish.title.toLowerCase() +
+                                        "\" has been added to the cart",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 3,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 22.0);
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
