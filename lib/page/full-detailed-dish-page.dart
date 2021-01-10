@@ -161,7 +161,7 @@ class _FullDetailedDishPageState extends State<FullDetailedDishPage> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                snapshot.data.addToCart(dish);
+                                dish.save();
                                 snapshot.data.save();
                                 Fluttertoast.showToast(
                                     msg: dish.quantity.toString() +

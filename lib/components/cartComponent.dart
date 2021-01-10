@@ -63,11 +63,7 @@ class _CartComponentState extends State<CartComponent> {
                         setState(() {
                           int i = 0;
 
-                          while (i < snapshot.data.cart.length) {
-                            if (value.id == snapshot.data.cart[i].id)
-                              snapshot.data.cart.removeAt(i);
-                            i++;
-                          }
+                          
                           snapshot.data.save();
                         });
                       },
@@ -83,13 +79,7 @@ class _CartComponentState extends State<CartComponent> {
                                 int i = 0;
                                 if (value.quantity < 1) value.quantity = 1;
                                 value.quantity -= 1;
-                                while (i < snapshot.data.cart.length) {
-                                  if (value.id == snapshot.data.cart[i].id) {
-                                    snapshot.data.cart[i].quantity =
-                                        value.quantity;
-                                    i++;
-                                  }
-                                }
+                                
                                 snapshot.data.save();
                               });
                             },
@@ -110,13 +100,7 @@ class _CartComponentState extends State<CartComponent> {
                               setState(() {
                                 int i = 0;
                                 value.quantity += 1;
-                                while (i < snapshot.data.cart.length) {
-                                  if (value.id == snapshot.data.cart[i].id) {
-                                    snapshot.data.cart[i].quantity =
-                                        value.quantity;
-                                    i++;
-                                  }
-                                }
+                                
                                 snapshot.data.save();
                               });
                             },
