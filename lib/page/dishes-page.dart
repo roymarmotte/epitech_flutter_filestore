@@ -123,8 +123,8 @@ class _DishesPageState extends State<DishesPage> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    if (dish.quantity == 0)
-                                      return
+                                    if (dish.quantity < 1)
+                                      dish.quantity = 1;
                                     dish.quantity -= 1;
                                   });
                                 },
@@ -143,8 +143,6 @@ class _DishesPageState extends State<DishesPage> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    if (dish.quantity == 99)
-                                      return
                                     dish.quantity += 1;
                                   });
                                 },
