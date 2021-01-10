@@ -99,10 +99,9 @@ class Dish {
   }
 
   static double totalToPay(List<Dish> cart) {
-    int i = 0;
     double toPay = 0.0;
 
-    while (i != cart.length) toPay += cart[i].price * cart[i].quantity;
+    for (var item in cart) toPay += item.price * item.quantity;
     return toPay;
   }
 

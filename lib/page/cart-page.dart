@@ -61,7 +61,7 @@ class _CartPageState extends State<CartPage> {
                       },
                       child: Container(
                         decoration: new BoxDecoration(
-                            color: Colors.green,
+                            color: Theme.of(context).primaryColor,
                             borderRadius: new BorderRadius.only(
                                 topLeft: const Radius.circular(40),
                                 bottomLeft: const Radius.circular(40),
@@ -72,7 +72,17 @@ class _CartPageState extends State<CartPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [Text("Order")],
+                          children: [
+                            Text(
+                                "Order (" +
+                                    Dish.totalToPay(snapshot.data)
+                                        .toStringAsFixed(2) +
+                                    " euros)",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ))
+                          ],
                         ),
                       ),
                     )
