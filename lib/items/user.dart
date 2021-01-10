@@ -90,6 +90,15 @@ class User {
     }
   }
 
+  double totalToPay() {
+    int i = 0;
+    double toPay = 0.0;
+
+    while (i != cart.length)
+      toPay += cart[i].price * cart[i].quantity;
+    return toPay;
+  }
+
   void save() async {
     final pref = await SharedPreferences.getInstance();
     pref.setString('user', jsonEncode(this.toJson()));

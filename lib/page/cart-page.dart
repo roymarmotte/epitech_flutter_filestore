@@ -60,9 +60,17 @@ class _CartPageState extends State<CartPage> {
                         });
                       },
                       child: Container(
+                        decoration: new BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(40),
+                            bottomLeft: const Radius.circular(40),
+                            topRight: const Radius.circular(40),
+                            bottomRight: const Radius.circular(40)
+                          )
+                        ),
                         height: MediaQuery.of(context).size.height * 0.10,
                         width: MediaQuery.of(context).size.width * 1,
-                        color: Colors.green,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
