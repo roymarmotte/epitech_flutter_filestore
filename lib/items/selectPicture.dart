@@ -3,13 +3,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 showAlertDialog(BuildContext context, String _title, String _description) {
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("Cancel"),
     onPressed: () {
       Navigator.of(context).pop();
     },
   );
-  Widget openSettingsButton = FlatButton(
+  Widget openSettingsButton = TextButton(
     child: Text("Open permissions"),
     onPressed: openAppSettings,
   );
