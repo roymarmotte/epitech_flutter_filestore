@@ -94,6 +94,7 @@ class _CartPageState extends State<CartPage> {
           icons: iconList,
           activeIndex: _bottomNavIndex,
           backgroundColor: Theme.of(context).primaryColor,
+          activeColor: Colors.white,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 0,
