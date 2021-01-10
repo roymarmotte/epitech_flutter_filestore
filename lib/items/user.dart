@@ -11,14 +11,18 @@ class User {
   String country;
   String picturePath;
   List<Dish> favorites;
+  List<Dish> cart;
 
   User(this.firstname, this.lastname, this.street, this.postalCode, this.city,
-      this.country, this.picturePath, this.favorites);
+      this.country, this.picturePath, this.favorites, this.cart);
 
   User.fromJson(Map<String, dynamic> json) {
     List<Dish> favoritesConverted = [];
     for (var item in json['favorites'])
       favoritesConverted.add(Dish.fromJson(item));
+
+    List<Dish> cartConverted = [];
+    for (var item in json['cart']) favoritesConverted.add(Dish.fromJson(item));
 
     firstname = json['firstname'];
     lastname = json['lastname'];
@@ -28,6 +32,7 @@ class User {
     country = json['country'];
     picturePath = json['picturePath'];
     favorites = favoritesConverted;
+    cart = cartConverted;
   }
   Map<String, dynamic> toJson() => {
         'firstname': firstname,
@@ -38,11 +43,21 @@ class User {
         'country': country,
         'picturePath': picturePath,
         'favorites': favorites,
+        'cart': cart
       };
 
   bool isAlreadyFavs(int id) {
     for (var item in favorites) if (item.id == id) return true;
     return false;
+  }
+
+  void addToCart(Dish toAdd) {
+    for (var item in cart) {
+        if (item.title == toAdd.title) {
+            item.quantity = item.quantity + toAdd.quantity;
+        }
+    }
+    cart.add(toAdd);
   }
 
   Dish saveFavs(Dish toAdd) {
@@ -84,7 +99,7 @@ class User {
     final loaded = pref.getString('user');
     if (loaded == null)
       return User("James", "Cameron", "1 Boulevard du Général", "13086",
-          "Paris", "France", null, []);
+          "Paris", "France", null, [], []);
     return User.fromJson(json.decode(loaded));
   }
 }
