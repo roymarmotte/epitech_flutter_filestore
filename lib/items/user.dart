@@ -29,16 +29,22 @@ class User {
     picturePath = json['picturePath'];
     favorites = favoritesConverted;
   }
-  Map<String, dynamic> toJson() => {
-        'firstname': firstname,
-        'lastname': lastname,
-        'street': street,
-        'postalCode': postalCode,
-        'city': city,
-        'country': country,
-        'picturePath': picturePath,
-        'favorites': favorites,
-      };
+  Map<String, dynamic> toJson() {
+    List<dynamic> favoritesFormated = [];
+    for (var item in favorites) favoritesFormated.add(item.toJson());
+
+    Map<String, dynamic> result = {
+      'firstname': firstname,
+      'lastname': lastname,
+      'street': street,
+      'postalCode': postalCode,
+      'city': city,
+      'country': country,
+      'picturePath': picturePath,
+      'favorites': favoritesFormated,
+    };
+    return result;
+  }
 
   bool isAlreadyFavs(int id) {
     for (var item in favorites) if (item.id == id) return true;

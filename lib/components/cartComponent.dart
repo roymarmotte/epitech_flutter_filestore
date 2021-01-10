@@ -1,52 +1,105 @@
 import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
+import 'package:flutter/foundation.dart';
 
-class CartComponent extends StatelessWidget {
+class CartComponent extends StatefulWidget {
   final Dish value;
-  const CartComponent({Key key, @required this.value}) : super(key: key);
+  final Function callback;
+  CartComponent({Key key, @required this.value, @required this.callback})
+      : super(key: key);
 
-  final double totalToPay = 0;
+  @override
+  _CartComponentState createState() =>
+      _CartComponentState(value: value, callback: callback);
+}
+
+class _CartComponentState extends State<CartComponent> {
+  _CartComponentState({@required this.value, @required this.callback});
+
+  Dish value;
+  Function callback;
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
+            Expanded(
               //padding: EdgeInsets.all(5.0),
-              height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.width * 0.20,
+              flex: 1,
               child: FittedBox(
-                  child: Image.asset('images/fromage.jpg'), fit: BoxFit.fill),
+                  child: Image(
+                    image: NetworkImage(value.img),
+                  ),
+                  fit: BoxFit.fill),
+            ),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  Text(
+                    value.title,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  Text(
+                    (value.price * value.quantity).toStringAsFixed(2) +
+                        " euros",
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                ],
+              ),
             ),
             Column(
               children: [
-                Text(
-                  value.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (value.quantity < 1) value.quantity = 1;
+                            value.quantity -= 1;
+                            callback(value, true);
+                          });
+                        },
+                        child: Text(
+                          "-",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                      SizedBox(width: 23),
+                      Text(
+                        value.quantity.toString(),
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(width: 23),
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            value.quantity += 1;
+                            callback(value, true);
+                          });
+                        },
+                        child: Text(
+                          "+",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
+                    ]),
+                IconButton(
+                  icon: Icon(Icons.restore_from_trash),
+                  onPressed: () {
+                    setState(() {
+                      callback(value, false);
+                    });
+                  },
                 ),
-                SizedBox(height: 5),
-                Text(value.description,
-                    style:
-                        TextStyle(fontStyle: FontStyle.italic, fontSize: 10)),
-                SizedBox(width: 5),
-                Text("Quantity" + value.quantity.toString(),
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  (value.price * value.quantity).toString(),
-                  style: TextStyle(color: Colors.green),
-                )
-              ],
-            )
           ],
         ),
       ),

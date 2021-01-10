@@ -9,12 +9,14 @@ environment:
 dependencies:
   animated_bottom_navigation_bar: ^0.2.1
   shared_preferences: 0.5.12+4
+  audioplayers: 0.17.0
   flutter:
     sdk: flutter
-  image_picker: ^0.6.7+15
-  permission_handler: 5.0.1+1
+  image_picker: ^0.6.7+21
+  permission_handler: ^5.0.1+1
   flutter_plugin_android_lifecycle: ^1.0.11
   cupertino_icons: ^1.0.0
+  fluttertoast: ^7.1.6
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +27,7 @@ flutter:
 
   assets:
     - images/
+    - assets/
 
   fonts:
     - family: BluuSuuperstar

@@ -44,27 +44,33 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
-            height: MediaQuery.of(context).size.height * 0.06,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[350],
-            ),
-            child: TextField(
-              controller: _searchBarController,
-              autocorrect: false,
-              maxLines: 1,
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                  hintText: "Search a dish or an entrée...",
-                  hintStyle: TextStyle(color: Colors.black87),
-                  prefixIcon: Icon(Icons.search, color: Colors.black87),
-                  border: InputBorder.none),
+          Expanded(
+            flex: 1,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey[350],
+              ),
+              child: TextField(
+                textAlignVertical: TextAlignVertical.center,
+                controller: _searchBarController,
+                autocorrect: false,
+                maxLines: 1,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                    hintText: "Search a dish or an entrée...",
+                    hintStyle: TextStyle(color: Colors.black87),
+                    prefixIcon: Icon(Icons.search, color: Colors.black87),
+                    border: InputBorder.none),
+              ),
             ),
           ),
-          filterDishes(_searchBarController.text, context)
+          Expanded(
+            flex: 9,
+            child: filterDishes(_searchBarController.text, context),
+          ),
         ],
       ),
       bottomNavigationBar: AnimatedBottomNavigationBar(
@@ -83,21 +89,17 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Container filterDishes(String searchBarText, BuildContext context) {
+ListView filterDishes(String searchBarText, BuildContext context) {
   var filtredDishes = initialDish.where((element) =>
       element.title.toLowerCase().contains(searchBarText.toLowerCase()));
   List<Widget> widgetDish = filtredDishes.map((e) => DishComponent(e)).toList();
 
-  return Container(
-    height: MediaQuery.of(context).size.height * 0.69,
-    width: MediaQuery.of(context).size.width,
-    child: ListView.separated(
-        padding: EdgeInsets.all(8),
-        itemCount: widgetDish.length,
-        separatorBuilder: (BuildContext context, int index) =>
-            Divider(color: Colors.white),
-        itemBuilder: (BuildContext context, int index) {
-          return widgetDish[index];
-        }),
-  );
+  return ListView.separated(
+      padding: EdgeInsets.all(8),
+      itemCount: widgetDish.length,
+      separatorBuilder: (BuildContext context, int index) =>
+          Divider(color: Colors.white),
+      itemBuilder: (BuildContext context, int index) {
+        return widgetDish[index];
+      });
 }

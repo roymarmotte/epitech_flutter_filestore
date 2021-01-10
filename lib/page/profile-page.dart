@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/page/favorites-page.dart';
 import 'package:flutter/foundation.dart';
@@ -25,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final routeList = <String>["/", "/profile", "/cart"];
 
   chooseImagePicker(BuildContext context) {
-    Widget fromCameraButton = FlatButton(
+    Widget fromCameraButton = TextButton(
       child: Text("Take a picture with your camera"),
       onPressed: () {
         setState(() {
@@ -34,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.of(context).pop();
       },
     );
-    Widget fromGalleryButton = FlatButton(
+    Widget fromGalleryButton = TextButton(
       child: Text("Choose a picture from your gallery"),
       onPressed: () {
         setState(() {
@@ -43,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.of(context).pop();
       },
     );
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -157,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     radius: 100,
                     backgroundImage: _user.picturePath == null
                         ? AssetImage('images/basic_profile.png')
-                        : AssetImage(_user.picturePath),
+                        : Image.file(File(_user.picturePath)).image,
                   ),
                 ),
               );
