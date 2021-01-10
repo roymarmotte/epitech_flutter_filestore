@@ -158,7 +158,7 @@ List<Dish> initialDish = [
         Ingredient("pepper", true),
         Ingredient("Parsley", true),
       ],
-      "https://assets.afcdn.com/recipe/20160118/2653_w600.jpg",
+      "https://assets.afcdn.com/recipe/20161116/23198_w600.jpg",
       8.20,
       1,
       8),
