@@ -5,6 +5,7 @@ import 'package:epitech_flutter_filestore/items/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:epitech_flutter_filestore/items/ingredient.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class FullDetailedDishPage extends StatefulWidget {
   final Dish dish;
@@ -162,7 +163,17 @@ class _FullDetailedDishPageState extends State<FullDetailedDishPage> {
                               onTap: () {
                                 snapshot.data.addToCart(dish);
                                 snapshot.data.save();
-                                print(dish.title);
+                                Fluttertoast.showToast(
+                                    msg: dish.quantity.toString() +
+                                        "x \"" +
+                                        dish.title.toLowerCase() +
+                                        "\" has been added to the cart",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 3,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 22.0);
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
