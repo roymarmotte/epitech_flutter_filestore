@@ -22,6 +22,15 @@ class _CartPageState extends State<CartPage> {
   ];
   final routeList = <String>["/", "/profile", "/cart"];
 
+  updateList(Dish toUpdate, bool isUpdate) {
+    setState(() {
+      if (isUpdate)
+        toUpdate.update();
+      else
+        toUpdate.delete();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,24 +49,17 @@ class _CartPageState extends State<CartPage> {
               if (snapshot.data.isEmpty) {
                 return Column();
               } else {
+                var listenableDish = ValueNotifier<List<Dish>>(snapshot.data);
                 return Column(
                   children: [
                     Expanded(
-                        child: FutureBuilder<User>(
-                            future: User.load(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<User> snapshotUser) {
-                              if (snapshot.hasData) {
-                                return ListView.builder(
+                        child: ListView.builder(
                                     itemCount: snapshot.data.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return CartComponent(
-                                          value: snapshot.data[index]);
-                                    });
-                              } else
-                                return Column();
-                            })),
+                                      return CartComponent(value: snapshot.data[index], callback: updateList);
+                                    })
+                              ),
                     InkWell(
                       onTap: () {
                         setState(() {

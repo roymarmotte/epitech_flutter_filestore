@@ -38,7 +38,7 @@ class Dish {
   Map<String, dynamic> toJson() {
     List<dynamic> ingredientFormated = [];
     for (var item in ingredients) ingredientFormated.add(item.toJson());
-    
+
     Map<String, dynamic> result = {
       'id': id,
       'title': title,
@@ -61,6 +61,17 @@ class Dish {
   bool isAlreadyExist(List<Dish> actualList, int id) {
     for (var item in actualList) if (item.id == id) return true;
     return false;
+  }
+
+  void update() async {
+    List<Dish> cart = await Dish.load();
+    for (var item in cart) {
+      if (item.id == this.id) {
+        await item.delete();
+        this.save();
+        break;
+      }
+    }
   }
 
   void save() async {

@@ -162,8 +162,6 @@ class _DishesPageState extends State<DishesPage> {
                             child: InkWell(
                               onTap: () {
                                 dish.save();
-                                snapshot.data.save();
-                                print(dish.title);
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
