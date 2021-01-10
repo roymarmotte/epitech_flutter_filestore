@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/page/favorites-page.dart';
 import 'package:flutter/foundation.dart';
@@ -157,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     radius: 100,
                     backgroundImage: _user.picturePath == null
                         ? AssetImage('images/basic_profile.png')
-                        : AssetImage(_user.picturePath),
+                        : Image.file(File(_user.picturePath)).image,
                   ),
                 ),
               );
