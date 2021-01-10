@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/components/cartComponent.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({Key key}) : super(key: key);
@@ -55,8 +56,14 @@ class _CartPageState extends State<CartPage> {
                       onTap: () {
                         setState(() {
                           Dish.reset();
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text('Order complete !')));
+                          Fluttertoast.showToast(
+                                    msg: "Order complete !",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 3,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 22.0);
                         });
                       },
                       child: Container(
