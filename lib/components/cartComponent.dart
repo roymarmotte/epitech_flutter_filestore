@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
+import 'package:flutter/foundation.dart';
 
-class CartComponent extends StatelessWidget {
+class CartComponent extends StatefulWidget {
   final Dish value;
-  const CartComponent({Key key, @required this.value}) : super(key: key);
+  CartComponent({Key key, @required this.value}) : super(key: key);
 
-  final double totalToPay = 0;
+  @override
+  _CartComponentState createState() => _CartComponentState(value: value);
+}
+
+class _CartComponentState extends State<CartComponent> {
+  _CartComponentState({@required value}) {
+    this.value = value;
+  }
+
+  Dish value;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -35,11 +45,52 @@ class CartComponent extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
                 Text(
-                  (value.price * value.quantity).toString() + " euros",
+                  (value.price * value.quantity).toStringAsFixed(2) + " euros",
                   style: TextStyle(color: Colors.green),
                 ),
               ],
-            )
+            ),
+            IconButton(
+              icon: Icon(Icons.restore_from_trash),
+              onPressed: () {},
+            ),
+            Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        if (value.quantity < 1) value.quantity = 1;
+                        value.quantity -= 1;
+                      });
+                    },
+                    child: Text(
+                      "-",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                  SizedBox(width: 23),
+                  Text(
+                    value.quantity.toString(),
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(width: 23),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        value.quantity += 1;
+                      });
+                    },
+                    child: Text(
+                      "+",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ]),
           ],
         ),
       ),

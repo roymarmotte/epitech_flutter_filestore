@@ -42,9 +42,7 @@ class _CartPageState extends State<CartPage> {
               } else {
                 return Column(
                   children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.50,
-                      width: MediaQuery.of(context).size.width * 0.80,
+                    Expanded(
                       child: ListView.builder(
                         itemCount: snapshot.data.cart.length,
                         itemBuilder: (BuildContext context, int index) {
