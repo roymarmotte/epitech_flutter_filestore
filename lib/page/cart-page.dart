@@ -4,7 +4,6 @@ import 'package:epitech_flutter_filestore/components/cartComponent.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:epitech_flutter_filestore/items/user.dart';
-import 'package:audioplayer/audioplayer.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({Key key}) : super(key: key);
@@ -15,7 +14,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   var _bottomNavIndex = 2;
-  AudioPlayer audio = AudioPlayer();
+  List<Dish> toDisplay;
   final iconList = <IconData>[
     Icons.home,
     Icons.account_circle_outlined,
@@ -46,19 +45,18 @@ class _CartPageState extends State<CartPage> {
                     Container(
                       height: MediaQuery.of(context).size.height * 0.50,
                       width: MediaQuery.of(context).size.width * 0.80,
-                      child: ListView(
-                        padding: const EdgeInsets.all(8),
-                        children: [
-                          CartComponent(value: snapshot.data.cart.first)
-                        ],
+                      child: ListView.builder(
+                        itemCount: snapshot.data.cart.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CartComponent(value: snapshot.data.cart[index]);
+                        }
                       ),
                     ),
                     InkWell(
                       onTap: () {
                         setState(() {
                           snapshot.data.cleanCart();
-                          audio.play("../../sounds/success.mp3");
-
+                          snapshot.data.save();
                         });
                       },
                       child: Container(
@@ -66,9 +64,9 @@ class _CartPageState extends State<CartPage> {
                         width: MediaQuery.of(context).size.width * 1,
                         color: Colors.green,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [Icon(Icons.star)],
+                          children: [Text("Order")],
                         ),
                       ),
                     )

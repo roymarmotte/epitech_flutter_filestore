@@ -143,7 +143,7 @@ class _DishesPageState extends State<DishesPage> {
                           onTap: () {
                               snapshot.data.addToCart(dish);
                               snapshot.data.save();
-                              print(snapshot.data.cart.first.title);
+                              print(dish.title);
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(

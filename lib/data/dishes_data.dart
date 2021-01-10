@@ -29,6 +29,6 @@ List<Dish> initialDish = [
       ],
       "https://img.cuisineaz.com/660x660/2019-08-08/i149772-welsh-au-thermomix.jpeg",
       9.20,
-      2,
+      1,
       1),
 ];

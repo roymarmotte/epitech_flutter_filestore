@@ -55,6 +55,8 @@ class User {
     for (var item in cart) {
         if (item.title == toAdd.title) {
             item.quantity = item.quantity + toAdd.quantity;
+            print("Plat trouvé");
+            return;
         }
     }
     cart.add(toAdd);
