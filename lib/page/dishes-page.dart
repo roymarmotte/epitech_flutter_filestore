@@ -161,7 +161,7 @@ class _DishesPageState extends State<DishesPage> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                snapshot.data.addToCart(dish);
+                                dish.save();
                                 snapshot.data.save();
                                 print(dish.title);
                               },

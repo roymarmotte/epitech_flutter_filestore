@@ -35,15 +35,21 @@ class Dish {
     img = json['img'];
     price = json['price'];
   }
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'quantity': quantity,
-        'description': description,
-        'ingredients': ingredients,
-        'img': img,
-        'price': price
-      };
+  Map<String, dynamic> toJson() {
+    List<dynamic> ingredientFormated = [];
+    for (var item in ingredients) ingredientFormated.add(item.toJson());
+    
+    Map<String, dynamic> result = {
+      'id': id,
+      'title': title,
+      'quantity': quantity,
+      'description': description,
+      'ingredients': ingredientFormated,
+      'img': img,
+      'price': price
+    };
+    return result;
+  }
 
   void changeIngredient(String ingredientToAdd, bool precense) {
     Ingredient newItem = Ingredient(ingredientToAdd, precense);
@@ -79,6 +85,14 @@ class Dish {
     var decoded = json.decode(loaded) as List;
     for (var item in decoded) result.add(Dish.fromJson(item));
     return result;
+  }
+
+  static double totalToPay(List<Dish> cart) {
+    int i = 0;
+    double toPay = 0.0;
+
+    while (i != cart.length) toPay += cart[i].price * cart[i].quantity;
+    return toPay;
   }
 
   delete() async {

@@ -11,18 +11,14 @@ class User {
   String country;
   String picturePath;
   List<Dish> favorites;
-  List<Dish> cart;
 
   User(this.firstname, this.lastname, this.street, this.postalCode, this.city,
-      this.country, this.picturePath, this.favorites, this.cart);
+      this.country, this.picturePath, this.favorites);
 
   User.fromJson(Map<String, dynamic> json) {
     List<Dish> favoritesConverted = [];
     for (var item in json['favorites'])
       favoritesConverted.add(Dish.fromJson(item));
-
-    List<Dish> cartConverted = [];
-    for (var item in json['cart']) cartConverted.add(Dish.fromJson(item));
 
     firstname = json['firstname'];
     lastname = json['lastname'];
@@ -32,38 +28,27 @@ class User {
     country = json['country'];
     picturePath = json['picturePath'];
     favorites = favoritesConverted;
-    cart = cartConverted;
   }
-  Map<String, dynamic> toJson() => {
-        'firstname': firstname,
-        'lastname': lastname,
-        'street': street,
-        'postalCode': postalCode,
-        'city': city,
-        'country': country,
-        'picturePath': picturePath,
-        'favorites': favorites,
-        'cart': cart
-      };
+  Map<String, dynamic> toJson() {
+    List<dynamic> favoritesFormated = [];
+    for (var item in favorites) favoritesFormated.add(item.toJson());
+
+    Map<String, dynamic> result = {
+      'firstname': firstname,
+      'lastname': lastname,
+      'street': street,
+      'postalCode': postalCode,
+      'city': city,
+      'country': country,
+      'picturePath': picturePath,
+      'favorites': favoritesFormated,
+    };
+    return result;
+  }
 
   bool isAlreadyFavs(int id) {
     for (var item in favorites) if (item.id == id) return true;
     return false;
-  }
-
-  void addToCart(Dish toAdd) {
-    for (var item in cart) {
-        if (item.id == toAdd.id) {
-            item.quantity = item.quantity + toAdd.quantity;
-            print("Plat trouvé");
-            return;
-        }
-    }
-    cart.add(toAdd);
-  }
-
-  void cleanCart() {
-    cart.clear();
   }
 
   Dish saveFavs(Dish toAdd) {
@@ -90,15 +75,6 @@ class User {
     }
   }
 
-  double totalToPay() {
-    int i = 0;
-    double toPay = 0.0;
-
-    while (i != cart.length)
-      toPay += cart[i].price * cart[i].quantity;
-    return toPay;
-  }
-
   void save() async {
     final pref = await SharedPreferences.getInstance();
     pref.setString('user', jsonEncode(this.toJson()));
@@ -114,7 +90,7 @@ class User {
     final loaded = pref.getString('user');
     if (loaded == null)
       return User("James", "Cameron", "1 Boulevard du Général", "13086",
-          "Paris", "France", null, [], []);
+          "Paris", "France", null, []);
     return User.fromJson(json.decode(loaded));
   }
 }

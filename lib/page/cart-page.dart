@@ -34,10 +34,10 @@ class _CartPageState extends State<CartPage> {
           ),
         ),
         body: FutureBuilder(
-          future: User.load(),
-          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          future: Dish.load(),
+          builder: (BuildContext context, AsyncSnapshot<List<Dish>> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.cart.isEmpty) {
+              if (snapshot.data.isEmpty) {
                 return Column();
               } else {
                 return Column(
@@ -46,14 +46,14 @@ class _CartPageState extends State<CartPage> {
                         child: FutureBuilder<User>(
                             future: User.load(),
                             builder: (BuildContext context,
-                                AsyncSnapshot<User> snapshot) {
+                                AsyncSnapshot<User> snapshotUser) {
                               if (snapshot.hasData) {
                                 return ListView.builder(
-                                    itemCount: snapshot.data.cart.length,
+                                    itemCount: snapshot.data.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return CartComponent(
-                                          value: snapshot.data.cart[index]);
+                                          value: snapshot.data[index]);
                                     });
                               } else
                                 return Column();
@@ -61,8 +61,6 @@ class _CartPageState extends State<CartPage> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          snapshot.data.cleanCart();
-                          snapshot.data.save();
                           Scaffold.of(context).showSnackBar(
                               SnackBar(content: Text('Order complete !')));
                         });
