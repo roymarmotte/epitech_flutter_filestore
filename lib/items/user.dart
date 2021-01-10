@@ -53,7 +53,7 @@ class User {
 
   void addToCart(Dish toAdd) {
     for (var item in cart) {
-        if (item.title == toAdd.title) {
+        if (item.id == toAdd.id) {
             item.quantity = item.quantity + toAdd.quantity;
             print("Plat trouvé");
             return;
