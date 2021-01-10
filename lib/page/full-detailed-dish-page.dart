@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:epitech_flutter_filestore/items/ingredient.dart';
 
-class DishesPage extends StatefulWidget {
+class FullDetailedDishPage extends StatefulWidget {
   final Dish dish;
-  DishesPage(this.dish);
+  FullDetailedDishPage(this.dish);
 
   @override
-  _DishesPageState createState() => _DishesPageState();
+  _FullDetailedDishPageState createState() => _FullDetailedDishPageState();
 }
 
-class _DishesPageState extends State<DishesPage> {
+class _FullDetailedDishPageState extends State<FullDetailedDishPage> {
   IconData star;
   Dish dish;
 
@@ -123,8 +123,7 @@ class _DishesPageState extends State<DishesPage> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    if (dish.quantity < 1)
-                                      dish.quantity = 1;
+                                    if (dish.quantity < 1) dish.quantity = 1;
                                     dish.quantity -= 1;
                                   });
                                 },
