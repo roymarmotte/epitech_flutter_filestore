@@ -155,25 +155,31 @@ class _DishesPageState extends State<DishesPage> {
                             ],
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            snapshot.data.addToCart(dish);
-                            snapshot.data.save();
-                            print(dish.title);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 60, vertical: 20),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).primaryColor),
-                            child: Center(
-                              child: Text(
-                                "Add to cart",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                        Container(
+                          color: Theme.of(context).primaryColor,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                snapshot.data.addToCart(dish);
+                                snapshot.data.save();
+                                print(dish.title);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 60, vertical: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.transparent),
+                                child: Center(
+                                  child: Text(
+                                    "Add to cart",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

@@ -57,6 +57,7 @@ class _CartPageState extends State<CartPage> {
                         setState(() {
                           snapshot.data.cleanCart();
                           snapshot.data.save();
+                          Scaffold.of(context).showSnackBar(SnackBar(content: Text('Order complete !')));
                         });
                       },
                       child: Container(
