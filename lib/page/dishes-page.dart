@@ -120,30 +120,48 @@ class _DishesPageState extends State<DishesPage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                "-",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 22),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (dish.quantity == 0)
+                                      return
+                                    dish.quantity -= 1;
+                                  });
+                                },
+                                child: Text(
+                                  "-",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 22),
+                                ),
                               ),
                               SizedBox(width: 23),
                               Text(
-                                "1",
+                                dish.quantity.toString(),
                                 style: TextStyle(fontWeight: FontWeight.w700),
                               ),
                               SizedBox(width: 23),
-                              Text(
-                                "+",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 22),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    if (dish.quantity == 99)
+                                      return
+                                    dish.quantity += 1;
+                                  });
+                                },
+                                child: Text(
+                                  "+",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 22),
+                                ),
                               ),
                             ],
                           ),
                         ),
                         InkWell(
                           onTap: () {
-                              snapshot.data.addToCart(dish);
-                              snapshot.data.save();
-                              print(dish.title);
+                            snapshot.data.addToCart(dish);
+                            snapshot.data.save();
+                            print(dish.title);
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(
