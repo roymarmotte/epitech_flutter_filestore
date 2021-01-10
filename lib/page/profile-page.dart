@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final routeList = <String>["/", "/profile", "/cart"];
 
   chooseImagePicker(BuildContext context) {
-    Widget fromCameraButton = FlatButton(
+    Widget fromCameraButton = TextButton(
       child: Text("Take a picture with your camera"),
       onPressed: () {
         setState(() {
@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.of(context).pop();
       },
     );
-    Widget fromGalleryButton = FlatButton(
+    Widget fromGalleryButton = TextButton(
       child: Text("Choose a picture from your gallery"),
       onPressed: () {
         setState(() {
@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.of(context).pop();
       },
     );
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
