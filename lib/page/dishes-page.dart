@@ -141,12 +141,9 @@ class _DishesPageState extends State<DishesPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            setState(() {
                               snapshot.data.addToCart(dish);
-                              for (var item in snapshot.data.cart) {
-                                print(item.title);
-                              }
-                            });
+                              snapshot.data.save();
+                              print(snapshot.data.cart.first.title);
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(

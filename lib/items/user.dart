@@ -22,7 +22,7 @@ class User {
       favoritesConverted.add(Dish.fromJson(item));
 
     List<Dish> cartConverted = [];
-    for (var item in json['cart']) favoritesConverted.add(Dish.fromJson(item));
+    for (var item in json['cart']) cartConverted.add(Dish.fromJson(item));
 
     firstname = json['firstname'];
     lastname = json['lastname'];
@@ -58,6 +58,10 @@ class User {
         }
     }
     cart.add(toAdd);
+  }
+
+  void cleanCart() {
+    cart.clear();
   }
 
   Dish saveFavs(Dish toAdd) {

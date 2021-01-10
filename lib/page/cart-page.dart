@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/components/cartComponent.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
+import 'package:epitech_flutter_filestore/items/user.dart';
+import 'package:audioplayer/audioplayer.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({Key key}) : super(key: key);
@@ -13,6 +15,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   var _bottomNavIndex = 2;
+  AudioPlayer audio = AudioPlayer();
   final iconList = <IconData>[
     Icons.home,
     Icons.account_circle_outlined,
@@ -32,12 +35,12 @@ class _CartPageState extends State<CartPage> {
           ),
         ),
         body: FutureBuilder(
-          future: Dish.load(),
-          builder: (BuildContext context, AsyncSnapshot<List<Dish>> snapshot) {
+          future: User.load(),
+          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.isEmpty)
+              if (snapshot.data.cart.isEmpty) {
                 return Column();
-              else
+              } else {
                 return Column(
                   children: [
                     Container(
@@ -45,11 +48,33 @@ class _CartPageState extends State<CartPage> {
                       width: MediaQuery.of(context).size.width * 0.80,
                       child: ListView(
                         padding: const EdgeInsets.all(8),
-                        children: [CartComponent(value: snapshot.data.first)],
+                        children: [
+                          CartComponent(value: snapshot.data.cart.first)
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          snapshot.data.cleanCart();
+                          audio.play("../../sounds/success.mp3");
+
+                        });
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.10,
+                        width: MediaQuery.of(context).size.width * 1,
+                        color: Colors.green,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [Icon(Icons.star)],
+                        ),
                       ),
                     )
                   ],
                 );
+              }
             } else if (snapshot.hasError) {
               print("error");
               return SnackBar(content: Text('${snapshot.error}'));

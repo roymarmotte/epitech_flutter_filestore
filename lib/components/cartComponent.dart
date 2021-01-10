@@ -19,7 +19,10 @@ class CartComponent extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.10,
               width: MediaQuery.of(context).size.width * 0.20,
               child: FittedBox(
-                  child: Image.asset('images/fromage.jpg'), fit: BoxFit.fill),
+                  child: Image(
+                    image: NetworkImage(value.img),
+                  ),
+                  fit: BoxFit.fill),
             ),
             Column(
               children: [
@@ -28,23 +31,13 @@ class CartComponent extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
                 SizedBox(height: 5),
-                Text(value.description,
-                    style:
-                        TextStyle(fontStyle: FontStyle.italic, fontSize: 10)),
-                SizedBox(width: 5),
-                Text("Quantity" + value.quantity.toString(),
+                Text("Quantity : " + value.quantity.toString(),
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
                 Text(
-                  (value.price * value.quantity).toString(),
+                  (value.price * value.quantity).toString() + " euros",
                   style: TextStyle(color: Colors.green),
-                )
+                ),
               ],
             )
           ],
