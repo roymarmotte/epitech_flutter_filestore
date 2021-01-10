@@ -43,31 +43,38 @@ class _CartPageState extends State<CartPage> {
                 return Column(
                   children: [
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: snapshot.data.cart.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return CartComponent(value: snapshot.data.cart[index]);
-                        }
-                      ),
-                    ),
+                        child: FutureBuilder<User>(
+                            future: User.load(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<User> snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                    itemCount: snapshot.data.cart.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return CartComponent(
+                                          value: snapshot.data.cart[index]);
+                                    });
+                              } else
+                                return Column();
+                            })),
                     InkWell(
                       onTap: () {
                         setState(() {
                           snapshot.data.cleanCart();
                           snapshot.data.save();
-                          Scaffold.of(context).showSnackBar(SnackBar(content: Text('Order complete !')));
+                          Scaffold.of(context).showSnackBar(
+                              SnackBar(content: Text('Order complete !')));
                         });
                       },
                       child: Container(
                         decoration: new BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: new BorderRadius.only(
-                            topLeft: const Radius.circular(40),
-                            bottomLeft: const Radius.circular(40),
-                            topRight: const Radius.circular(40),
-                            bottomRight: const Radius.circular(40)
-                          )
-                        ),
+                            color: Colors.green,
+                            borderRadius: new BorderRadius.only(
+                                topLeft: const Radius.circular(40),
+                                bottomLeft: const Radius.circular(40),
+                                topRight: const Radius.circular(40),
+                                bottomRight: const Radius.circular(40))),
                         height: MediaQuery.of(context).size.height * 0.10,
                         width: MediaQuery.of(context).size.width * 1,
                         child: Column(
