@@ -25,14 +25,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: new Center(
-            child: Text(
-              "Restaurant Delivery",
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
+        appBar: AppBar(),
         body: FutureBuilder(
           future: User.load(),
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
