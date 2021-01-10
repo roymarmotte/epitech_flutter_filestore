@@ -1,3 +1,5 @@
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/components/cartComponent.dart';
@@ -55,15 +57,17 @@ class _CartPageState extends State<CartPage> {
                     InkWell(
                       onTap: () {
                         setState(() {
+                          AudioCache player = AudioCache();
+                          player.play("success.wav");
                           Dish.reset();
                           Fluttertoast.showToast(
-                                    msg: "Order complete !",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 3,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: 22.0);
+                              msg: "Order complete !",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 3,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 22.0);
                         });
                       },
                       child: Container(
