@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/components/cartComponent.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
-import 'package:epitech_flutter_filestore/items/user.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({Key key}) : super(key: key);
@@ -42,20 +41,20 @@ class _CartPageState extends State<CartPage> {
               if (snapshot.data.isEmpty) {
                 return Column();
               } else {
-                var listenableDish = ValueNotifier<List<Dish>>(snapshot.data);
                 return Column(
                   children: [
                     Expanded(
                         child: ListView.builder(
-                                    itemCount: snapshot.data.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return CartComponent(value: snapshot.data[index], callback: updateList);
-                                    })
-                              ),
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CartComponent(
+                                  value: snapshot.data[index],
+                                  callback: updateList);
+                            })),
                     InkWell(
                       onTap: () {
                         setState(() {
+                          Dish.reset();
                           Scaffold.of(context).showSnackBar(
                               SnackBar(content: Text('Order complete !')));
                         });

@@ -1,4 +1,3 @@
-import 'package:epitech_flutter_filestore/items/user.dart';
 import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/items/dish.dart';
 import 'package:flutter/foundation.dart';
