@@ -44,27 +44,24 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey[350],
-              ),
-              child: TextField(
-                textAlignVertical: TextAlignVertical.center,
-                controller: _searchBarController,
-                autocorrect: false,
-                maxLines: 1,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                    hintText: "Search a dish or an entrée...",
-                    hintStyle: TextStyle(color: Colors.black87),
-                    prefixIcon: Icon(Icons.search, color: Colors.black87),
-                    border: InputBorder.none),
-              ),
+          Container(
+            margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey[350],
+            ),
+            child: TextField(
+              textAlignVertical: TextAlignVertical.center,
+              controller: _searchBarController,
+              autocorrect: false,
+              maxLines: 1,
+              style: TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                  hintText: "Search a dish or an entrée...",
+                  hintStyle: TextStyle(color: Colors.black87),
+                  prefixIcon: Icon(Icons.search, color: Colors.black87),
+                  border: InputBorder.none),
             ),
           ),
           Expanded(
