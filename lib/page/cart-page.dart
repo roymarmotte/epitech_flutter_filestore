@@ -1,5 +1,4 @@
 import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:epitech_flutter_filestore/components/cartComponent.dart';
@@ -40,7 +39,8 @@ class _CartPageState extends State<CartPage> {
         body: FutureBuilder(
           future: Dish.load(),
           builder: (BuildContext context, AsyncSnapshot<List<Dish>> snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.done) {
               if (snapshot.data.isEmpty) {
                 return Column();
               } else {

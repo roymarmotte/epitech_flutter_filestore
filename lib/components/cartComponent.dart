@@ -58,11 +58,9 @@ class _CartComponentState extends State<CartComponent> {
                     children: [
                       InkWell(
                         onTap: () {
-                          setState(() {
                             if (value.quantity < 1) value.quantity = 1;
                             value.quantity -= 1;
                             callback(value, true);
-                          });
                         },
                         child: Text(
                           "-",
@@ -78,10 +76,8 @@ class _CartComponentState extends State<CartComponent> {
                       SizedBox(width: 23),
                       InkWell(
                         onTap: () {
-                          setState(() {
                             value.quantity += 1;
                             callback(value, true);
-                          });
                         },
                         child: Text(
                           "+",
@@ -93,9 +89,7 @@ class _CartComponentState extends State<CartComponent> {
                 IconButton(
                   icon: Icon(Icons.restore_from_trash),
                   onPressed: () {
-                    setState(() {
                       callback(value, false);
-                    });
                   },
                 ),
               ],
